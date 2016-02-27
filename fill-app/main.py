@@ -1,16 +1,25 @@
-"""`main` is the top level module for your Flask application."""
-
-# Import the Flask Framework
+# -*- coding: utf-8 -*-
+"""
+`main` is the top level module for your Flask application.
+"""
+import jinja2
+import os
 from flask import Flask
+from flask import render_template
 app = Flask(__name__)
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
+
+# Template Directories
+template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
+                               autoescape = True)
 
 
 @app.route('/')
 def hello():
     """Return a friendly HTTP greeting."""
-    return 'Hello World!'
+    return render_template('layout.html', title="FILL")
 
 
 @app.errorhandler(404)
