@@ -19,7 +19,7 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
 @app.route('/')
 def hello():
     """Return a friendly HTTP greeting."""
-    return render_template('layout.html', title="FILL")
+    return render_template('feed.html', page_title="Event Feed", events=[1,2,3])
 
 
 @app.errorhandler(404)
