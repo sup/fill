@@ -17,10 +17,14 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
 
 
 @app.route('/')
-def hello():
+def home():
     """Return a friendly HTTP greeting."""
-    return render_template('feed.html', page_title="Event Feed", events=[1,2,3])
+    return render_template('home.html', page_title="FILL")
 
+@app.route('/events')
+def events():
+	"""Return event feed"""
+	return render_template('feed.html', page_title="Event Feed", events=[1,2,3])
 
 @app.errorhandler(404)
 def page_not_found(e):

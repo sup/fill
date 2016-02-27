@@ -2,6 +2,7 @@ body {
 	background-color: #fcfcfc;
 }
 
+/* Templates/Structures */
 .card {
 	background-color: white;
 	padding: 10px;
@@ -9,3 +10,8 @@ body {
 	margin-bottom: 15px;
 }
 
+
+/* Colors */
+.pink {
+	background-color: #FC9D9A;
+}
