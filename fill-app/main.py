@@ -29,12 +29,12 @@ def home():
 # TODO: Login Controller
 @app.route('/login')
 def login():
-	pass
+	return render_template('login.html')
 
 # TODO: Signup
 @app.route('/signup')
 def signup():
-	pass
+    return render_template('signup.html')
 
 # TODO: Create Event Controller
 
