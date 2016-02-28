@@ -8,8 +8,10 @@ from google.appengine.ext import ndb
 class User(ndb.Model):
 	# Properties
     username = ndb.StringProperty(required = True)
-    password = ndb.StringProperty(required = True)
-    email = ndb.StringProperty(required = False)
+    password_hash = ndb.StringProperty(required = True)
+    email = ndb.StringProperty(required = True)
+    created_events = ndb.StringProperty(repeated=True)
+    joined_events = ndb.StringProperty(repeated=True)
 
 # Debug
 if __name__ == '__main__':
