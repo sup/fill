@@ -6,6 +6,7 @@ import jinja2
 import os
 from flask import Flask
 from flask import render_template
+from flask import request
 app = Flask(__name__)
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
