@@ -56,6 +56,20 @@ body {
 	background-color: #F4A4B0;
 }
 
+.btn:visited {
+	color: #565a5c;
+	border-color: #565a5c;
+	border-width: 3px;
+	background-color: transparent;
+}
+
+.btn:active {
+	color: #565a5c;
+	border-color: #565a5c;
+	border-width: 3px;
+	background-color: transparent;
+}
+
 
 /* Font Colors */
 .light-font {
