@@ -7,9 +7,12 @@ import os
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import make_response
 app = Flask(__name__)
-# Note: We don't need to call run() since our application is embedded within
-# the App Engine WSGI application server.
+# Import custom libraries
+from security import *
+from models.event_model import *
+from models.user_model import * 
 
 # Template Directories
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
@@ -28,14 +31,40 @@ def home():
     # else: return render_template('dashboard.html', args*, kwargs**)
 
 # TODO: Login Controller
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
 	return render_template('login.html')
 
 # TODO: Signup
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+    if request.method == 'GET':
+        # Display the Signup form
+        return render_template('signup.html')
+    else:
+        # Signup the User
+        name = request.form["name"]
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        # TODO: Verify user data
+        
+        # Add the user
+        available = User.is_username_available(username)
+        if not available:
+            return "That user exists"
+        else:
+            hashed_pw = make_pw_hash(str(username), str(password))
+            user = User(name=name, 
+                        username=username, 
+                        email=email, 
+                        password_hash=hashed_pw)
+            user.put()
+            response = make_response("Hello " + username)
+            response.set_cookie('username', username)
+            return response
+
 
 # TODO: Create Event Controller
 
