@@ -33,7 +33,24 @@ def home():
 # TODO: Login Controller
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-	return render_template('login.html')
+    if request.method == 'GET':
+        # TODO: If logged in, redirect to dashboard
+	   return render_template('login.html')
+    else:
+        # Process the form
+        username = request.form["username"]
+        password = request.form["password"]
+        # Get the User and check password
+        user = User.get_user(username)
+        if user is None:
+            return "Username doesn't exist"
+        hashed_pw = user.password_hash
+        if not valid_pw(username, password, hashed_pw):
+            return "Incorrect Password"
+        else:
+            return "Good password!"
+
+
 
 # TODO: Signup
 @app.route('/signup', methods=['GET', 'POST'])
@@ -49,12 +66,11 @@ def signup():
         password = request.form["password"]
 
         # TODO: Verify user data
-        
-        # Add the user
         available = User.is_username_available(username)
         if not available:
             return "That user exists"
         else:
+            # Add the user
             hashed_pw = make_pw_hash(str(username), str(password))
             user = User(name=name, 
                         username=username, 

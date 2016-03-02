@@ -18,10 +18,19 @@ class User(ndb.Model):
 
     @classmethod
     def is_username_available(self, username):
-        return self.query(self.username == username) is None
+        return self.query(self.username == username).count() is 0
 
+    @classmethod
     def is_email_available(self, email):
-        return self.query(self.email == email) is None
+        return self.query(self.email == email).count() is 0
+
+    @classmethod
+    def get_user(self, username):
+        userlist = self.query(self.username == username).fetch(1)
+        if len(userlist) == 0:
+            return None
+        else:
+            return userlist[0]
 
 # Debug
 if __name__ == '__main__':
