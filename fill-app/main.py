@@ -4,10 +4,7 @@
 """
 import jinja2
 import os
-from flask import Flask
-from flask import render_template
-from flask import request
-from flask import make_response
+from flask import Flask, render_template, request, make_response, redirect, url_for
 app = Flask(__name__)
 # Import custom libraries
 from security import *
@@ -26,31 +23,13 @@ Main View Controllers
 def home():
     """Return landing page if not logged in, else show dashboard"""
     # TODO: Gatekeeper Controller
-    # if loggedin:
-    return render_template('home.html', page_title="FILL")
-    # else: return render_template('dashboard.html', args*, kwargs**)
-
-# TODO: Login Controller
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'GET':
-        # TODO: If logged in, redirect to dashboard
-	   return render_template('login.html')
+    username = request.cookies.get('username')
+    user = User.get_user(username)
+    if user:
+        return render_template('dashboard.html', name=user.name)
     else:
-        # Process the form
-        username = request.form["username"]
-        password = request.form["password"]
-        # Get the User and check password
-        user = User.get_user(username)
-        if user is None:
-            return "Username doesn't exist"
-        hashed_pw = user.password_hash
-        if not valid_pw(username, password, hashed_pw):
-            return "Incorrect Password"
-        else:
-            return "Good password!"
-
-
+        return render_template('home.html', page_title="FILL")
+    # else: return render_template('dashboard.html', args*, kwargs**)
 
 # TODO: Signup
 @app.route('/signup', methods=['GET', 'POST'])
@@ -77,10 +56,38 @@ def signup():
                         email=email, 
                         password_hash=hashed_pw)
             user.put()
-            response = make_response("Hello " + username)
-            response.set_cookie('username', username)
+            response = make_response(redirect(url_for('home')))
+            response.set_cookie("username", username)
             return response
 
+# TODO: Login Controller
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        # TODO: If logged in, redirect to dashboard
+	   return render_template('login.html')
+    else:
+        # Process the form
+        username = request.form["username"]
+        password = request.form["password"]
+        # Get the User and check password
+        user = User.get_user(username)
+        if user is None:
+            return render_template('login.html', error="User doesn't exist!")
+        hashed_pw = user.password_hash
+        if not valid_pw(username, password, hashed_pw):
+            return render_template('login.html', error="Password incorrect!")
+        else:
+            response = make_response(redirect(url_for('home')))
+            response.set_cookie("username", username)
+            return response
+
+# Logout Controller
+@app.route('/logout')
+def logout():
+    response = make_response(render_template('login.html', success="Successfully logged out."))
+    response.set_cookie('username', '')
+    return response
 
 # TODO: Create Event Controller
 
