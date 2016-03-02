@@ -1,5 +1,7 @@
 sudo: false
 language: python
+notifications:
+  email: false
 cache:
   directories:
   - "$HOME/google-cloud-sdk/"
