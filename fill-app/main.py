@@ -95,6 +95,11 @@ def events():
 	"""Return event feed"""
 	return render_template('feed.html', page_title="Event Feed", events=[1,2,3])
 
+# Application Health Controller
+@app.route('/health')
+def health():
+    """Return OK if the app is working"""
+    return "OK"
 
 """
 Error Handlers
