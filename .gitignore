@@ -62,7 +62,6 @@ target/
 .ipynb_checkpoints
 
 credentials.tar.gz
-credentials.tar.gz.enc
 client-secret.json
 api_key.py
 lib/
