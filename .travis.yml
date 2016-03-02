@@ -13,6 +13,7 @@ before_install:
   "${GAE_PYTHONPATH}"); fi
 - if [ ! -d ${HOME}/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash;
   fi
+- ls ${HOME}/google-cloud-sdk
 - tar -xzf credentials.tar.gz
 - mkdir -p lib
 - ls ${HOME}/google-cloud-sdk/bin
@@ -23,16 +24,6 @@ install:
 - pip install -r requirements.txt -t lib/
 script:
 - python test_main.py
-- gcloud -q preview app deploy app.yaml --promote
 - python e2e_test.py
-# [START travis_deploy]
-deploy:
-    provider: gae
-    # Skip cleanup so api_key.py and vendored dependencies are still there
-    skip_cleanup: true
-    keyfile: client-secret.json
-    project: fill-app
-    default: true
-    on:
-        all_branches: true
+- gcloud -q preview app deploy app.yaml --promote
 # [END travis_deploy]
