@@ -7,7 +7,7 @@ import os
 from flask import Flask, render_template, request, make_response, redirect, url_for
 app = Flask(__name__)
 # Import custom libraries
-from security import *
+from util.security import *
 from models.event_model import *
 from models.user_model import * 
 
@@ -89,21 +89,12 @@ def logout():
     response.set_cookie('username', '')
     return response
 
-# TODO: Create Event Controller
-
-# TODO: Join Event Controller
-
-# TODO: Show Events Controller
+# TODO: Event Feed Controller
 @app.route('/events')
 def events():
 	"""Return event feed"""
 	return render_template('feed.html', page_title="Event Feed", events=[1,2,3])
 
-
-"""
-RESTful API for accessing NDB+Backend: search, etc -> useful with jQuery AJAX
-"""
-# TODO: Backend helper methods
 
 """
 Error Handlers
