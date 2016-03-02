@@ -8,8 +8,7 @@ from flask import Flask, render_template, request, make_response, redirect, url_
 app = Flask(__name__)
 # Import custom libraries
 from util.security import *
-from models.event_model import *
-from models.user_model import * 
+from models.models import User
 
 # Template Directories
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
@@ -65,7 +64,7 @@ def signup():
 def login():
     if request.method == 'GET':
         # TODO: If logged in, redirect to dashboard
-	   return render_template('login.html')
+       return render_template('login.html')
     else:
         # Process the form
         username = request.form["username"]
@@ -92,8 +91,8 @@ def logout():
 # TODO: Event Feed Controller
 @app.route('/events')
 def events():
-	"""Return event feed"""
-	return render_template('feed.html', page_title="Event Feed", events=[1,2,3])
+    """Return event feed"""
+    return render_template('feed.html', page_title="Event Feed", events=[1,2,3])
 
 # Application Health Controller
 @app.route('/health')
