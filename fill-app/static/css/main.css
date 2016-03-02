@@ -3,6 +3,7 @@ body {
 	color: #565a5c;
 	font-size: 14px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	padding-top: 50px;
 }
 
 /* Navbar */
@@ -38,7 +39,7 @@ body {
 }
 
 .small-block {
-	padding: 30px 0px 30px 0px;
+	padding: 40px 0px 40px 0px;
 }
 
 
