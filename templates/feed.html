@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="container">
+    <h1 class="text-center">{{page_title}}</h1>
+	{% for n in events %}
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+			<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<h3>Event Name</h3>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+{% endblock %}

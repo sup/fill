@@ -1,0 +1,87 @@
+{% from "macros.html" import nav_link with context %}
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FILL</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="static/css/main.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">
+            <p class="navbar-text">FILL</p>
+            <svg class="nav-logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+               width="353.92px" height="353.92px" viewBox="0 0 353.92 353.92" enable-background="new 0 0 353.92 353.92" xml:space="preserve">
+            <g id="FILL-Header" transform="translate(542.550000, 70.000000)" sketch:type="MSLayerGroup">
+              
+                <path id="Path-4-Copy-5" sketch:type="MSShapeGroup" fill="#F4A4B0" stroke="#F4A4B0" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round" d="
+                M-394.43,88.48c81.123,30.721,124.717,49.468,167.72-21.84c22.12-36.68,20.16-20.44,10.08,27.72
+                c-10.08,48.16-92.112,111.973-148.96,146.161c-62.713-37.827-121.021-97.042-140.84-124.88
+                C-529.383,83.402-441.75,70.56-394.43,88.48z"/>
+              <path id="Oval-1-Copy-2" sketch:type="MSShapeGroup" fill="#fcfcfc" d="M-365.59,283.92c97.732,0,176.96-79.228,176.96-176.96
+                S-267.858-70-365.59-70S-542.55,9.228-542.55,106.96S-463.322,283.92-365.59,283.92z M-274.869,22.96
+                c42.078,0,51.648,34.47,47.14,61.927c-9.646,58.74-113.688,128.622-137.86,140.558c-24.173-11.937-128.215-81.818-137.86-140.558
+                c-4.51-27.458,5.061-61.927,47.139-61.927s90.722,54.91,90.722,54.91S-316.947,22.96-274.869,22.96z"/>
+              <circle id="Oval-26-Copy-2" sketch:type="MSShapeGroup" fill="#FFFFFF" cx="-472.945" cy="90.529" r="4.849">
+              </circle>
+              <ellipse id="Oval-26-Copy-3" sketch:type="MSShapeGroup" fill="#FFFFFF" cx="-458.764" cy="95.378" rx="2.772" ry="2.772">
+              </ellipse>
+              
+                <path id="Path-4-Copy-8" sketch:type="MSShapeGroup" fill="none" stroke="#F4A4B0" stroke-width="4.48" stroke-linecap="round" stroke-linejoin="round" d="
+                M-274.795,23.121c42.112,0,51.689,34.498,47.177,61.978c-9.654,58.788-113.78,128.726-137.972,140.673
+                c-24.192-11.947-128.318-81.885-137.973-140.673c-4.513-27.479,5.065-61.978,47.178-61.978c42.111,0,90.795,54.955,90.795,54.955
+                S-316.907,23.121-274.795,23.121z"/>
+            </g>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            {{ nav_link('login', 'Login') }}
+            {{ nav_link('signup', 'Signup') }}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <!-- END NAVIGATION BAR-->
+
+    <!-- CONTENT -->
+    {% block landing %}{% endblock %}
+    {% block content %}{% endblock %}
+    <!-- END CONTENT -->
+
+
+    <!-- BOTTOM LOADED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  </body>
+</html>
