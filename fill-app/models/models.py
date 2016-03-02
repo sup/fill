@@ -1,11 +1,10 @@
-"""
-user.py
 
-User model for the FILL app.
-"""
 from google.appengine.ext import ndb
 
 class User(ndb.Model):
+    """
+    User model for the FILL app.
+    """
     # User Properties
     name = ndb.StringProperty(required = True)
     username = ndb.StringProperty(required = True)
@@ -31,6 +30,17 @@ class User(ndb.Model):
             return None
         else:
             return userlist[0]
+
+class Event(ndb.Model):
+    """
+    Event model for the FILL app.
+    """
+    # Properties
+    name = ndb.StringProperty(required=True)
+    date = ndb.DateTimeProperty(required=True)
+    admin = ndb.StringProperty(required=True)
+    volunteers = ndb.StringProperty(repeated=True)
+    description = ndb.TextProperty()
 
 # Debug
 if __name__ == '__main__':
