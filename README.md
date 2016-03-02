@@ -1,4 +1,4 @@
-# FILL 
+# FILL [![Build Status](https://travis-ci.org/sup/fill.svg?branch=master)](https://travis-ci.org/sup/fill)
 Prototype application for FILL written in Flask and deployed to Google Cloud Services.
 
 ## References
