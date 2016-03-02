@@ -16,7 +16,7 @@ before_install:
   fi
 - tar -xzf credentials.tar.gz
 - mkdir -p lib
-- echo "$PATH"
+- ls ${HOME}/google-cloud-sdk/bin
 - gcloud auth activate-service-account --key-file client-secret.json
 install:
 - gcloud config set project fill-app
