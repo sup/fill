@@ -88,6 +88,12 @@ def logout():
     response.set_cookie('username', '')
     return response
 
+# Profile Controller
+@app.route('/profile')
+def profile():
+    """Return Profile Page"""
+    return render_template('profile.html')
+
 # TODO: Event Feed Controller
 @app.route('/events')
 def events():
