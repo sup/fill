@@ -1,9 +1,9 @@
 {% extends "dashboard.html" %}
 {% block content %}
     <h1>My Profile</h1>
-    <h2>Created Events</h2>
-    {% if created_events %}
-		{% for n in created_events %}
+    <h2>Joined Events</h2>
+    {% if joined_events %}
+		{% for n in joined_events %}
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<h3>Event Name</h3>
@@ -14,9 +14,9 @@
 	{% if not joined_events %}
     	<div>You haven't created any events!</div>
     {% endif %}
-    <h2>Joined Events</h2>
-    {% if joined_events %}
-		{% for n in joined_events %}
+	<h2>Created Events</h2>
+    {% if created_events %}
+		{% for n in created_events %}
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<h3>Event Name</h3>

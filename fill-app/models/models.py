@@ -41,6 +41,12 @@ class Event(ndb.Model):
     admin = ndb.StringProperty(required=True)
     volunteers = ndb.StringProperty(repeated=True)
     description = ndb.TextProperty()
+    language = ndb.StringProperty(required=True)
+    hours = ndb.IntegerProperty(required=True)
+    physical_activity = ndb.StringProperty(required=True)
+    volunteers_needed = ndb.IntegerProperty(required=True)
+    drivered_needed = ndb.IntegerProperty(required=True)
+    translators_needed = ndb.IntegerProperty(required=True)
 
 # Debug
 if __name__ == '__main__':
