@@ -1,16 +1,88 @@
 {% extends "dashboard.html" %}
 {% block content %}
-    <h1>Event Feed</h1>
-	{% for n in events %}
-		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-			<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<h2 class="card-name">Event Name</h2>
-				<h4 class="card-description">Description</h4>
-				<p class="card-needs">LANGUAGE: ...</p>
-				<p class="card-needs">PHYSICAL ACTIVITY: ...</p>
-				<h4 class="card-footer pink-font">X HOURS | JAN 01 2016</h4>
-			</div>
-		</div>
-	{% endfor %}
-	</div>
+  <h2>Filter</h2>
+  <div class="row">
+    <!-- LEFT SIDE FILTER FORM -->
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+      <div class="row">
+        <div class="col-lg-12 form-group">
+          <label for="input" class="col-sm-2 control-label">Language</label>
+          <div class="col-sm-10">
+            <select name="" id="language" class="form-control">
+              <option value="">English</option>
+              <option value="">Spanish</option>
+              <option value="">Chinese</option>
+              <option value="">Yoruba</option>
+            </select>
+          </div>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12 form-group">
+          <label for="input" class="col-sm-2 control-label">Time Commitment</label>
+          <div class="col-sm-10">
+            <select name="" id="time_commitment" class="form-control">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6+">6+</option>
+            </select>
+          </div>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12 form-group">
+          <label for="input" class="col-sm-2 control-label">Physical Activity</label>
+          <div class="col-sm-10">
+            <select name="" id="phyiscal_a" class="form-control">
+              <option value="">Low</option>
+              <option value="">Medium</option>
+              <option value="">High</option>
+            </select>
+          </div>
+        </div>  
+      </div>
+    </div>
+    <!-- RIGHT SIDE FILTER FORM -->
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+      <div class="row">
+        <div class="col-lg-4 form-group">
+          <div class="text-center">
+            <h2>Driver</h2>
+            <input type="radio" name="driver" id="driver" value="1" checked="checked">
+          </div>
+        </div>  
+        <div class="col-lg-4 form-group">
+          <div class="text-center">
+            <h2>Translator</h2>
+            <input type="radio" name="translator" id="translator" value="1" checked="checked">
+          </div>
+        </div>  
+        <div class="col-lg-4 form-group">
+          <div class="text-center">
+            <h2>Volunteer</h2>
+            <input type="radio" name="volunteer" id="Volunteer" value="1" checked="checked">
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+  <hr>
+  <!-- RESULTS -->
+  <h2>Upcoming Events</h2>
+  <div id="event_results">
+  {% for n in events %}
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+      <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h2 class="card-name">Event Name</h2>
+        <h4 class="card-description">Description</h4>
+        <p class="card-needs">LANGUAGE: ...</p>
+        <p class="card-needs">PHYSICAL ACTIVITY: ...</p>
+        <h4 class="card-footer pink-font">X HOURS | JAN 01 2016</h4>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
 {% endblock %}

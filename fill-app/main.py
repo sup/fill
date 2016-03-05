@@ -46,7 +46,7 @@ def signup():
         # TODO: Verify user data
         available = User.is_username_available(username)
         if not available:
-            return "That user exists"
+            return render_template('signup.html', error="User already exists!")
         else:
             # Add the user
             hashed_pw = make_pw_hash(str(username), str(password))
@@ -114,6 +114,14 @@ def create_event():
 def health():
     """Return OK if the app is working"""
     return "OK"
+
+"""
+API for jQuery AJAX
+"""
+@app.route('/get_events', methods=['GET'])
+def get_events():
+    """Return a JSON object of event data for AJAX"""
+    return "[]"
 
 """
 Error Handlers
