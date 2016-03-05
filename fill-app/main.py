@@ -98,7 +98,16 @@ def profile():
 @app.route('/events')
 def events():
     """Return event feed"""
-    return render_template('feed.html', page_title="Event Feed", events=[1,2,3])
+    return render_template('feed.html', events=[1,2,3])
+
+# TODO: Create Events Controller
+@app.route('/create_event', methods=['GET', 'POST'])
+def create_event():
+    """Create Event Form"""
+    if request.method == 'GET':
+        return render_template('create_event.html')
+    else:
+        pass
 
 # Application Health Controller
 @app.route('/health')

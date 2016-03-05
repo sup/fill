@@ -1,6 +1,7 @@
 {% extends "dashboard.html" %}
 {% block content %}
     <h1>My Profile</h1>
+    <hr>
     <h2>Joined Events</h2>
     {% if joined_events %}
 		{% for n in joined_events %}
@@ -14,6 +15,8 @@
 	{% if not joined_events %}
     	<div>You haven't created any events!</div>
     {% endif %}
+    <a href="/events" type="button" class="btn">Find an event</a>
+    <hr>
 	<h2>Created Events</h2>
     {% if created_events %}
 		{% for n in created_events %}
@@ -27,4 +30,5 @@
 	{% if not joined_events %}
     	<div>You haven't created any events!</div>
     {% endif %}
+    <a href="/create_event" type="button" class="btn">Create an event</a>
 {% endblock %}
