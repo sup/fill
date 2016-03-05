@@ -72,6 +72,10 @@
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav navbar-left">
+          {{ nav_link('profile', 'Profile') }}
+          {{ nav_link('events', 'Events') }}
+        </ul>
         <ul class="nav navbar-nav navbar-right">
           {{ nav_link('logout', 'Logout') }}
         </ul>
@@ -92,7 +96,7 @@
           {{ nav_link('profile', 'Profile') }}
         </li>
         <li>
-          {{ nav_link('events', 'Upcoming Events') }}
+          {{ nav_link('events', 'Events') }}
         </li>
       </ul>
     </div>
