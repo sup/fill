@@ -27,7 +27,7 @@ def home():
     if user:
         return render_template('dashboard.html', name=user.name)
     else:
-        return render_template('home.html', page_title="FILL")
+        return render_template('profile.html', page_title="FILL")
     # else: return render_template('dashboard.html', args*, kwargs**)
 
 # TODO: Signup
@@ -77,7 +77,7 @@ def login():
         if not valid_pw(username, password, hashed_pw):
             return render_template('login.html', error="Password incorrect!")
         else:
-            response = make_response(redirect(url_for('home')))
+            response = make_response(redirect(url_for('profile')))
             response.set_cookie("username", username)
             return response
 

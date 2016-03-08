@@ -7,7 +7,7 @@ body {
 }
 
 p {
-	margin: 0
+	margin: 0;
 }
 
 /* Navbar */
@@ -31,10 +31,10 @@ p {
 	font-size: 96px;
 }
 
+/* Card CSS */
 .card {
-	background-color: white;
+	background-color: #efefef;
 	padding: 10px;
-	padding-left: 30px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.33);
 	margin-bottom: 15px;
 }
@@ -44,6 +44,24 @@ p {
 	margin-left: 0px;
 }
 
+.card-top {
+	padding-bottom: 15px;
+	padding-left: 0px;
+	border-bottom: 3px solid #fcfcfc;
+}
+
+.card-bottom {
+	padding-top: 15px;
+	padding-left: 0px;
+}
+
+.event-info {
+	border-right: 3px solid #fcfcfc;
+}
+
+.card-info {
+	font-size: 11px;
+}
 .card:hover {
 	box-shadow: 0 5px 7px rgba(0, 0, 0, 0.33);
 }
