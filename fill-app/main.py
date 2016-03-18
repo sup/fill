@@ -25,9 +25,9 @@ def home():
     username = request.cookies.get('username')
     user = User.get_user(username)
     if user:
-        return render_template('dashboard.html', name=user.name)
+        return render_template('profile.html', name=user.name)
     else:
-        return render_template('profile.html', page_title="FILL")
+        return render_template('home.html', page_title="FILL")
     # else: return render_template('dashboard.html', args*, kwargs**)
 
 # TODO: Signup
@@ -121,15 +121,15 @@ def create_event():
         username = request.cookies.get('username')
         user = User.get_user(username)
 
-        event = Event(name=name, 
-                      date=date, 
-                      hours=hours, 
-                      description=description,
-                      language=language,
-                      volunteers_needed=volunteers_needed,
-                      drivers_needed=drivers_needed,
-                      translators_needed=translators_needed,
-                      admin=user)
+        # event = Event(name=name, 
+        #               date=date, 
+        #               hours=hours, 
+        #               description=description,
+        #               language=language,
+        #               volunteers_needed=volunteers_needed,
+        #               drivers_needed=drivers_needed,
+        #               translators_needed=translators_needed,
+        #               admin=user)
 
         return render_template('create_event.html', success="Event successfully created!")
 
