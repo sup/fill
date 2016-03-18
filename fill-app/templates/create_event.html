@@ -2,44 +2,49 @@
 {% block content %}
     <h1>Create Event</h1>
     <hr>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success" role="alert">{{success}}</div>
+    {% endif %}
     <form action="/create_event" method="POST" role="form">    
-      <div class="form-group">
+      <div class="form-group col-lg-4">
         <label for="">Event Name</label>
         <input type="text" class="form-control" name="name" placeholder="Input field" required="required">
       </div>
-      <div class="form-group">
+      <div class="form-group col-lg-4">
         <label for="">Date</label>
         <input type="date" name="date" class="form-control" value="" required="required" title="">
       </div>
-      <div class="form-group">
+      <div class="form-group col-lg-4">
         <label for="">Hours Needed</label>
         <input type="number" name="hours" class="form-control" value="" min="{5"} max="" step="" required="required">
       </div>
-      <div class="form-group">
+      <div class="form-group col-lg-12">
         <label for="">Description</label>
         <textarea name="description" class="form-control" rows="3" required="required"></textarea>
       </div>
-      <div class="form-group">
+      <div class="form-group col-lg-6">
         <label for="">Language</label>
-        <input type="text" class="form-control" name="name" placeholder="Language" required="required">
+        <input type="text" class="form-control" name="language" placeholder="Language" required="required">
       </div>
-      <div class="form-group">
+      <div class="form-group col-lg-6">
         <label for="">Physical Activity</label>
-        <textarea name="physical_activity" class="form-control" rows="3" required="required"></textarea>
+        <input type="text" class="form-control" name="physical_activity" placeholder="Physical Activity" required="required">
       </div>
-      <div class="form-group">
+      <div class="form-group col-lg-4">
         <label for="">Volunteers Needed</label>
         <input type="number" name="volunteers_needed" class="form-control" value="" min="{0"} max="" step="" required="required">
       </div>
-      <div class="form-group">
+      <div class="form-group col-lg-4">
         <label for="">Drivers Needed</label>
         <input type="number" name="drivers_needed" class="form-control" value="" min="{0"} max="" step="" required="required">
       </div>
-      <div class="form-group">
+      <div class="form-group col-lg-4">
         <label for="">Translators Needed</label>
         <input type="number" name="translators_needed" class="form-control" value="" min="{0"} max="" step="" required="required">
       </div>
-    
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 {% endblock %}

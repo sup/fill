@@ -66,7 +66,7 @@ def login():
         # TODO: If logged in, redirect to dashboard
        return render_template('login.html')
     else:
-        # Process the form
+        # Paarse the form
         username = request.form["username"]
         password = request.form["password"]
         # Get the User and check password
@@ -107,7 +107,31 @@ def create_event():
     if request.method == 'GET':
         return render_template('create_event.html')
     else:
-        pass
+        # Parse the form
+        name = request.form["name"]
+        date = request.form["date"]
+        hours = request.form["hours"]
+        description = request.form["description"]
+        language = request.form["language"]
+        volunteers_needed = request.form["volunteers_needed"]
+        drivers_needed = request.form["drivers_needed"]
+        translators_needed = request.form["translators_needed"]
+
+        # Get admin
+        username = request.cookies.get('username')
+        user = User.get_user(username)
+
+        event = Event(name=name, 
+                      date=date, 
+                      hours=hours, 
+                      description=description,
+                      language=language,
+                      volunteers_needed=volunteers_needed,
+                      drivers_needed=drivers_needed,
+                      translators_needed=translators_needed,
+                      admin=user)
+
+        return render_template('create_event.html', success="Event successfully created!")
 
 # Application Health Controller
 @app.route('/health')

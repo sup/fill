@@ -52,7 +52,7 @@ class Event(ndb.Model):
     date = ndb.DateTimeProperty(required=True)
     admin = ndb.StringProperty(required=True)
     volunteers = ndb.StringProperty(repeated=True)
-    description = ndb.TextProperty()
+    description = ndb.TextProperty(required=True)
     language = ndb.StringProperty(required=True)
     hours = ndb.IntegerProperty(required=True)
     physical_activity = ndb.StringProperty(required=True)
