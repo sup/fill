@@ -8,7 +8,7 @@ from flask import Flask, render_template, request, make_response, redirect, url_
 app = Flask(__name__)
 # Import custom libraries
 from util.security import *
-from models.models import User
+from models.models import User, Event
 
 # Template Directories
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
