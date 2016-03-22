@@ -5,6 +5,7 @@
 import jinja2
 import os
 from flask import Flask, render_template, request, make_response, redirect, url_for
+import datetime
 app = Flask(__name__)
 # Import custom libraries
 from util.security import *
@@ -92,13 +93,21 @@ def logout():
 @app.route('/profile')
 def profile():
     """Return Profile Page"""
-    return render_template('profile.html')
+    username = request.cookies.get('username')
+    user = User.get_user(username)
+    if user:
+        joined_events = Event.get_events_by_volunteer(user.key)
+        created_events = Event.get_events_by_admin(user.key)
+        return render_template('profile.html', joined_events=joined_events, created_events=created_events)
+    else:
+        return render_template('home.html', page_title="FILL")
 
 # TODO: Event Feed Controller
 @app.route('/events')
 def events():
     """Return event feed"""
-    return render_template('feed.html', events=[1,2,3])
+    events = Event.query().fetch()
+    return render_template('event_feed.html', events=events)
 
 # TODO: Create Events Controller
 @app.route('/create_event', methods=['GET', 'POST'])
@@ -110,26 +119,30 @@ def create_event():
         # Parse the form
         name = request.form["name"]
         date = request.form["date"]
-        hours = request.form["hours"]
+        date = datetime.datetime.strptime(date, "%m/%d/%Y %H:%M %p")
+        hours = int(request.form["hours"])
         description = request.form["description"]
         language = request.form["language"]
-        volunteers_needed = request.form["volunteers_needed"]
-        drivers_needed = request.form["drivers_needed"]
-        translators_needed = request.form["translators_needed"]
+        physical_activity = request.form["physical_activity"]
+        volunteers_needed = int(request.form["volunteers_needed"])
+        drivers_needed = int(request.form["drivers_needed"])
+        translators_needed = int(request.form["translators_needed"])
 
         # Get admin
         username = request.cookies.get('username')
         user = User.get_user(username)
 
-        # event = Event(name=name, 
-        #               date=date, 
-        #               hours=hours, 
-        #               description=description,
-        #               language=language,
-        #               volunteers_needed=volunteers_needed,
-        #               drivers_needed=drivers_needed,
-        #               translators_needed=translators_needed,
-        #               admin=user)
+        event = Event(name=name, 
+                      date=date, 
+                      hours=hours, 
+                      description=description,
+                      language=language,
+                      physical_activity=physical_activity,
+                      volunteers_needed=volunteers_needed,
+                      drivers_needed=drivers_needed,
+                      translators_needed=translators_needed,
+                      admin=user.key)
+        event.put()
 
         return render_template('create_event.html', success="Event successfully created!")
 

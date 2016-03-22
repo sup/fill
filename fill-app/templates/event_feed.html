@@ -75,6 +75,9 @@
   <hr>
   <!-- RESULTS -->
   <div id="event_results">
+  {% if not events %}
+    <h4>No events available!</h4>
+  {% endif %}
   {% for n in events %}
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
       <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
