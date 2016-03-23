@@ -1,0 +1,36 @@
+{% extends "dashboard.html" %}
+{% block content %}
+    <h1>My Profile</h1>
+    <hr>
+    <h2>Joined Events</h2>
+    {% if joined_events %}
+		{% for n in joined_events %}
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h3>Event Name</h3>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+	{% if not joined_events %}
+    	<div>You haven't created any events!</div>
+    {% endif %}
+    <a href="/events" type="button" class="btn">Join an event</a>
+    <hr>
+	<h2>Created Events</h2>
+    {% if created_events %}
+		{% for n in created_events %}
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+				<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h3>Event Name</h3>
+					<p>{{n.description}}</p>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+	<div class="row"></div>
+	{% if not created_events %}
+    	<div>You haven't created any events!</div>
+    {% endif %}
+    <a href="/create_event" type="button" class="btn">Create an event</a>
+{% endblock %}
