@@ -78,16 +78,16 @@
   {% if not events %}
     <h4>No events available!</h4>
   {% endif %}
-  {% for n in events %}
+  {% for e in events %}
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
       <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="card-top col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-            <h3 class="card-title">Event Name</h3>
-            <p class="card-description">Description</p>
+            <h3 class="card-title">{{e.name}}</h3>
+            <p class="card-description">{{e.description}}</p>
           </div>
           <div class="card-title text-center col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <p>X Hours</p>
+            <p>{{e.hours}} Hours</p>
           </div>
         </div>
         <div class="card-bottom col-xs-12 col-sm-12 col-md-12 col-lg-12">
