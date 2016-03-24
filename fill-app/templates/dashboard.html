@@ -14,9 +14,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
   <!-- Main CSS -->
-  <link rel="stylesheet" href="static/css/main.css">
+  <link rel="stylesheet" href="/static/css/main.css">
   <!-- Custom CSS -->
-  <link href="static/css/dashboard.css" rel="stylesheet">
+  <link href="/static/css/dashboard.css" rel="stylesheet">
 
   <!-- jQuery -->
   <script src="//code.jquery.com/jquery.js"></script>
@@ -26,7 +26,7 @@
   <!-- Date Time Picker -->
   <script type="text/javascript" src="static/bower_components/moment/min/moment.min.js"></script>
   <script type="text/javascript" src="static/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-  <link rel="stylesheet" href="static/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+  <link rel="stylesheet" href="/static/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -80,7 +80,8 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav navbar-left">
-          {{ nav_link('profile', 'Profile') }}
+          {{ nav_link('timeline', 'Timeline') }}
+          {{ nav_link('admin', 'Admin') }}
           {{ nav_link('events', 'Events') }}
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -95,12 +96,15 @@
     <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
         <li class="sidebar-brand">
-          <a href="/profile">
+          <a href="/timeline">
             Dashboard
           </a>
         </li>
         <li class="active">
-          {{ nav_link('profile', 'Profile') }}
+          {{ nav_link('timeline', 'Timeline') }}
+        </li>
+        <li>
+          {{ nav_link('admin', 'Admin') }}
         </li>
         <li>
           {{ nav_link('events', 'Events') }}

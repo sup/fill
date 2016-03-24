@@ -26,7 +26,7 @@ def home():
     username = request.cookies.get('username')
     user = User.get_user(username)
     if user:
-        return render_template('profile.html', name=user.name)
+        return redirect(url_for('timeline'))
     else:
         return render_template('home.html', page_title="FILL")
     # else: return render_template('dashboard.html', args*, kwargs**)
@@ -78,7 +78,7 @@ def login():
         if not valid_pw(username, password, hashed_pw):
             return render_template('login.html', error="Password incorrect!")
         else:
-            response = make_response(redirect(url_for('profile')))
+            response = make_response(redirect(url_for('timeline')))
             response.set_cookie("username", username)
             return response
 
@@ -90,15 +90,29 @@ def logout():
     return response
 
 # Profile Controller
-@app.route('/profile')
-def profile():
+@app.route('/timeline')
+def timeline():
     """Return Profile Page"""
     username = request.cookies.get('username')
     user = User.get_user(username)
     if user:
         joined_events = Event.get_events_by_volunteer(user.key)
         created_events = Event.get_events_by_admin(user.key)
-        return render_template('profile.html', joined_events=joined_events, created_events=created_events)
+        first_name = user.name.split(" ")[0]
+        return render_template('timeline.html', user=user, first_name=first_name, joined_events=joined_events, created_events=created_events)
+    else:
+        return render_template('home.html', page_title="FILL")
+
+# Admin Controller
+@app.route('/admin')
+def admin():
+    """Return Admin Page"""
+    username = request.cookies.get('username')
+    user = User.get_user(username)
+    if user:
+        joined_events = Event.get_events_by_volunteer(user.key)
+        created_events = Event.get_events_by_admin(user.key)
+        return render_template('admin.html', user=user, joined_events=joined_events, created_events=created_events)
     else:
         return render_template('home.html', page_title="FILL")
 
@@ -108,6 +122,15 @@ def events():
     """Return event feed"""
     events = Event.query().fetch()
     return render_template('event_feed.html', events=events)
+
+@app.route('/event_page/')
+@app.route('/event_page/<id>')
+def event_page(id=None):
+    """Return event page"""
+    if id is None:
+        return redirect(url_for('timeline'))
+    event = Event.get_event_by_id(id)
+    return render_template('event_page.html', event=event)
 
 # TODO: Create Events Controller
 @app.route('/create_event', methods=['GET', 'POST'])
@@ -132,6 +155,7 @@ def create_event():
         username = request.cookies.get('username')
         user = User.get_user(username)
 
+        # Create and event
         event = Event(name=name, 
                       date=date, 
                       hours=hours, 
@@ -146,15 +170,16 @@ def create_event():
 
         return render_template('create_event.html', success="Event successfully created!")
 
+"""
+API
+"""
 # Application Health Controller
 @app.route('/health')
 def health():
     """Return OK if the app is working"""
     return "OK"
 
-"""
-API for jQuery AJAX
-"""
+# Get Events JSON Controller
 @app.route('/get_events', methods=['GET'])
 def get_events():
     """Return a JSON object of event data for AJAX"""

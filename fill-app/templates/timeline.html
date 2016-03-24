@@ -1,0 +1,22 @@
+{% extends "dashboard.html" %}
+{% block content %}
+	<br>
+	<br>
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-offset-2 col-lg-offset-2 col-md-4 col-lg-4">
+	    	<h1 class="green-font">{{user.name}}</h1>
+	    	<p>Joined Events: {{joined_events|length}}</p>
+	    	<p>Created Events: {{created_events|length}}</p>
+	    </div>
+	    <div class="text-center col-xs-12 col-sm-6 col-md-4 col-lg-4">
+	    	<h1>Hi {{first_name}}!</h1>
+	    	<h2>Weclome to your timeline</h2>
+	    	<br>
+	    	<h4>FILL it with photos,</h4>
+	    	<h4>reflections,</h4>
+	    	<h4> and thoughts.</h4>
+	    </div>
+	</div>
+	<div class="row">
+
+{% endblock %}

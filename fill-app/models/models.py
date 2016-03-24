@@ -72,6 +72,11 @@ class Event(ndb.Model):
         """Get a list of events by a user"""
         return self.query(Event.volunteers.IN([user])).fetch()
 
+    @classmethod
+    def get_event_by_id(self, id):
+        """Get an event by its key id"""
+        return self.get_by_id(int(id))
+
 
 # Debug
 if __name__ == '__main__':
