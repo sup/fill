@@ -1,5 +1,9 @@
 {% extends "dashboard.html" %}
 {% block content %}
-    <h1>{{event.name}}</h1>
+    <h1 class="pink-font">{{event.name}}</h1>
+    <h4 class="pink-font">{{event.date.strftime('%B %d, %Y')}}
+    <hr>
+    <h3>Event Info:</h3>
+    <h4>Description: {{event.description}}</h2>
     <hr>
 {% endblock %}
