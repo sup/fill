@@ -175,9 +175,55 @@ def create_event():
 @app.route('/edit_event/<id>', methods=['GET', 'POST'])
 def edit_event(id=None):
     """Edit Event Form"""
+    # Check ID
     if id is None:
         return redirect(url_for('admin'))
-    pass
+
+    # Get user
+    username = request.cookies.get('username')
+    user = User.get_user(username)
+    if not user:
+        return redirect(url_for('home'))
+
+    # Get Event
+    event = Event.get_event_by_id(id)
+
+    # Handle Requests
+    if request.method == 'GET':
+        return render_template('edit_event.html', event=event)
+    else:
+        # Parse the form if its the event admin
+        if event.admin.id() == user.key.id():
+            name = request.form["name"]
+            date = request.form["date"]
+            date = datetime.strptime(date, "%m/%d/%Y %H:%M %p")
+            hours = int(request.form["hours"])
+            description = request.form["description"]
+            language = request.form["language"]
+            physical_activity = request.form["physical_activity"]
+            volunteers_needed = int(request.form["volunteers_needed"])
+            drivers_needed = int(request.form["drivers_needed"])
+            translators_needed = int(request.form["translators_needed"])
+
+            # Update the event
+            event.name = name
+            event.date = date
+            event.hours = hours
+            event.description = description
+            event.language = language
+            event.physical_activity = physical_activity
+            event.volunteers_needed = int(volunteers_needed)
+            event.drivers_needed = int(drivers_needed)
+            event.translators_needed = int(translators_needed)
+            event.put()
+
+            # Return success message
+            return render_template('edit_event.html', event=event, success="Event successfully edited!")
+
+        # Otherwise, redirect to admin page
+        else:
+            return redirect(url_for('admin'))
+
 
 @app.route('/join_event/')
 @app.route('/join_event/<id>', methods=['GET', 'POST'])

@@ -10,6 +10,8 @@ class User(ndb.Model):
     username = ndb.StringProperty(required = True)
     email = ndb.StringProperty(required = True)
     password_hash = ndb.StringProperty(required = True)
+    bio = ndb.TextProperty()
+    skills = ndb.StringProperty(repeated = True)
 
     @classmethod
     def is_username_available(self, username):
@@ -39,6 +41,11 @@ class User(ndb.Model):
         else:
             return userlist
 
+    @classmethod
+    def get_user_by_id(self, id):
+        """Get an event by its key id"""
+        return self.get_by_id(int(id))
+
 class Event(ndb.Model):
     """
     Event model for the FILL app.
@@ -52,22 +59,23 @@ class Event(ndb.Model):
     hours = ndb.IntegerProperty(required=True)
     physical_activity = ndb.StringProperty(required=True)
 
-    # Needed Personnel
-    volunteers_needed = ndb.KeyProperty(repeated=True)
-    drivers_needed = ndb.KeyProperty(repeated=True)
-    translators_needed = ndb.KeyProperty(repeated=True)
+    # Needed Personnel (Integers)
+    volunteers_needed = ndb.IntegerProperty()
+    drivers_needed = ndb.IntegerProperty()
+    translators_needed = ndb.IntegerProperty()
 
-    # Requests
+    # Requests (List of Users)
     volunteer_requests = ndb.KeyProperty(repeated=True)
     driver_requests = ndb.KeyProperty(repeated=True)
     translator_requests = ndb.KeyProperty(repeated=True)
 
-    # Accepted Personnel
+    # Accepted Personnel (List of Users)
     volunteers = ndb.KeyProperty(repeated=True)
     drivers = ndb.KeyProperty(repeated=True)
     translators = ndb.KeyProperty(repeated=True)
 
     def verify(self):
+        # Fix some event values that are broken ... deprecated
         if self.volunteers_needed == [None]:
             self.volunteers_needed = []
         if self.drivers_needed == [None]:

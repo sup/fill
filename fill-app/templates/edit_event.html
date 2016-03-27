@@ -1,0 +1,61 @@
+{% extends "dashboard.html" %}
+{% block content %}
+    <h1>Edit Event</h1>
+    <hr>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success" role="alert">{{success}}</div>
+    {% endif %}
+    <form action="/edit_event/{{event.key.id()}}" method="POST" role="form">    
+      <div class="form-group col-lg-4">
+        <label for="">Event Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Event Name" required="required" value="{{event.name}}">
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="">Date</label>
+        <!-- TODO: Datetime! -->
+        <div class='input-group date' id='datetimepicker'>
+          <input type='text' name='date' class="form-control" placeholder="Date" required="required"/>
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+          <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker').datetimepicker();
+            });
+        </script>
+        </div>
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="">Hours Needed</label>
+        <input type="number" name="hours" class="form-control" value="{{event.hours}}" min="{5"} max="" step="" required="required">
+      </div>
+      <div class="form-group col-lg-12">
+        <label for="">Description</label>
+        <textarea name="description" class="form-control" rows="3" required="required">{{event.description}}</textarea>
+      </div>
+      <div class="form-group col-lg-6">
+        <label for="">Language</label>
+        <input type="text" class="form-control" name="language" placeholder="Language" value="{{event.language}}" required="required">
+      </div>
+      <div class="form-group col-lg-6">
+        <label for="">Physical Activity</label>
+        <input type="text" class="form-control" name="physical_activity" placeholder="Physical Activity" value="{{event.physical_activity}}" required="required">
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="">Volunteers Needed</label>
+        <input type="number" name="volunteers_needed" class="form-control" value="{{event.volunteers_needed}}" min="{0"} max="" step="" required="required">
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="">Drivers Needed</label>
+        <input type="number" name="drivers_needed" class="form-control" value="{{event.drivers_needed}}" min="{0"} max="" step="" required="required">
+      </div>
+      <div class="form-group col-lg-4">
+        <label for="">Translators Needed</label>
+        <input type="number" name="translators_needed" class="form-control" value="{{event.translators_needed}}" min="{0"} max="" step="" required="required">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

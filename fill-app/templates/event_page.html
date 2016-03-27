@@ -2,11 +2,11 @@
 {% block content %}
   <h1 class="event-page-title pink-font">{{event.name}}</h1>
   <h4 class="pink-font">{{event.date.strftime('%B %d, %Y')}}</h4>
+  <p>{{event.description}}</p>
   <hr>
-  <h5>Description: {{event.description}}</h5>
-  <h5>Language: {{event.language}}</h5>
-  <h5>Physical Activity: {{event.physical_activity}}</h5>
-  <h5>Time: About {{event.hours}} hour(s)</h5>
+  <p><strong>Language:</strong> {{event.language}}</p>
+  <p><strong>Physical Activity:</strong> {{event.physical_activity}}</p>
+  <p><strong>Time: About</strong> {{event.hours}} hour(s)</p>
   <hr>
   <h3>Volunteers:</h3>
   <div class="row">

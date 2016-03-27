@@ -3,7 +3,7 @@
 	<h2>Joined Events</h2>
     {% if joined_events %}
 		{% for e in joined_events %}
-			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<h3>{{e.name}}</h3>
 					<p>{{e.description}}</p>
@@ -20,14 +20,14 @@
 	<h2>Created Events</h2>
     {% if created_events %}
 		{% for e in created_events %}
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 				<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<h3>{{e.name}}</h3>
 					<p>{{e.description}}</p>
 					<hr class="light-hr">
 					<a href="/event_page/{{e.key.id()}}" type="button" class="btn">Event Page</a>
-					<a href="/edit_event" type="button" class="btn">Edit Event</a>
-					<a href="/check_requests" type="button" class="btn">Check Requests</a>
+					<a href="/edit_event/{{e.key.id()}}" type="button" class="btn">Edit Event</a>
+					<a href="/check_requests/{{e.key.id()}}" type="button" class="btn">Check Requests</a>
 				</div>
 			</div>
 		{% endfor %}
@@ -40,7 +40,7 @@
 	<h2>Sent Requests</h2>
     {% if requested_events %}
 		{% for e in requested_events %}
-			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 				<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<h3>{{e.name}}</h3>
 					{% if user.key in e.volunteer_requests %}
