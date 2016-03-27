@@ -445,7 +445,6 @@ def check_requests(id=None):
         accept = int(request.args.get("accept"))
         # Accept the User
         if accept:
-            return str(accept)
             if volunteer:
                 event.volunteer_requests = [x for x in event.volunteer_requests if x != user.key]
                 event.volunteers.append(user.key)
