@@ -9,7 +9,7 @@
     <div class="alert alert-success" role="alert">{{success}}</div>
     {% endif %}
     <div class="row text-center"><h1>I want to help out as a...</h1></div>
-    <form action="/join_event" method="POST" role="form">    
+    <form action="/join_event/{{event.key.id()}}" method="POST" role="form">    
       <div class="row">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
           <div class="text-center">
@@ -17,9 +17,9 @@
             <img src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
             <br>
             {% if volunteer %}
-              <input type="checkbox" name="volunteer" id="Volunteer" value="1" checked="checked">
+              <input type="checkbox" name="volunteer" id="volunteer" value="1" checked="checked">
             {% else %}
-              <input type="checkbox" name="volunteer" id="Volunteer" value="1">
+              <input type="checkbox" name="volunteer" id="volunteer" value="1">
             {% endif %}
           </div>
         </div>  

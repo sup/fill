@@ -53,19 +53,39 @@ class Event(ndb.Model):
     physical_activity = ndb.StringProperty(required=True)
 
     # Needed Personnel
-    volunteers_needed = ndb.IntegerProperty(required=True)
-    drivers_needed = ndb.IntegerProperty(required=True)
-    translators_needed = ndb.IntegerProperty(required=True)
+    volunteers_needed = ndb.KeyProperty(repeated=True)
+    drivers_needed = ndb.KeyProperty(repeated=True)
+    translators_needed = ndb.KeyProperty(repeated=True)
 
     # Requests
-    volunteer_requests = ndb.IntegerProperty(required=True)
-    driver_requests = ndb.IntegerProperty(required=True)
-    translator_requests = ndb.IntegerProperty(required=True)
+    volunteer_requests = ndb.KeyProperty(repeated=True)
+    driver_requests = ndb.KeyProperty(repeated=True)
+    translator_requests = ndb.KeyProperty(repeated=True)
 
     # Accepted Personnel
     volunteers = ndb.KeyProperty(repeated=True)
     drivers = ndb.KeyProperty(repeated=True)
     translators = ndb.KeyProperty(repeated=True)
+
+    def verify(self):
+        if self.volunteers_needed == [None]:
+            self.volunteers_needed = []
+        if self.drivers_needed == [None]:
+            self.drivers_needed = []
+        if self.translators_needed == [None]:
+            self.translators_needed = []
+        if self.volunteer_requests == [None]:
+            self.volunteer_requests = []
+        if self.driver_requests == [None]:
+            self.driver_requests = []
+        if self.translator_requests == [None]:
+            self.translator_requests = []
+        if self.volunteers == [None]:
+            self.volunteers = []
+        if self.drivers == [None]:
+            self.drivers = []
+        if self.translators == [None]:
+            self.translators = []
 
     @classmethod
     def get_events_by_name(self, name):

@@ -176,6 +176,9 @@ def join_event(id=None):
     if id is None:
         return redirect(url_for('timeline'))
     else:
+        # Get user
+        username = request.cookies.get('username')
+        user = User.get_user(username)
         event = Event.get_event_by_id(id)
         # Show form or process join as query
         if request.method == 'GET':
@@ -183,12 +186,21 @@ def join_event(id=None):
             driver = request.args.get("driver")
             translator = request.args.get("translator")
             return render_template('join_event.html', event=event, volunteer=volunteer, driver=driver, translator=translator)
+
         # Handle post data from form
         else:
-            volunteer = request.form["volunteer"]
-            driver = request.form["driver"]
-            translator = request.form["translator"]
-            return render_template('join_event.html', event=event)
+            volunteer = request.form.get("volunteer")
+            driver = request.form.get("driver")
+            translator = request.form.get("translator")
+            if volunteer:
+                event.volunteer_requests.append(user.key)
+            if driver:
+                event.driver_requests.append(user.key)
+            if translator:
+                event.translator_requests.append(user.key)
+            event.verify()
+            event.put()
+            return render_template('join_event.html', event=event, success="Request successfully sent!")
 
 
 """
