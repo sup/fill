@@ -97,11 +97,15 @@ class Event(ndb.Model):
         """Get a list of events by a user"""
         return self.query(self.admin == user).fetch()
 
-
     @classmethod
     def get_events_by_volunteer(self, user):
         """Get a list of events by a user"""
-        return self.query(Event.volunteers.IN([user])).fetch()
+        return self.query(Event.volunteers.IN([user]) or Event.drivers.IN([user]) or Event.translators.IN([user])).fetch()
+
+    @classmethod
+    def get_events_by_request(self, user):
+        """Get a list of events by a user"""
+        return self.query(Event.volunteer_requests.IN([user]) or Event.driver_requests.IN([user]) or Event.translator_requests.IN([user])).fetch()
 
     @classmethod
     def get_event_by_id(self, id):

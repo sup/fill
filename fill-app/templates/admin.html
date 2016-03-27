@@ -5,7 +5,10 @@
 		{% for e in joined_events %}
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<h3>Event Name</h3>
+					<h3>{{e.name}}</h3>
+					<p>{{e.description}}</p>
+					<hr class="light-hr">
+					<a href="/event_page/{{e.key.id()}}" type="button" class="btn">Event Page</a>
 				</div>
 			</div>
 		{% endfor %}
@@ -23,7 +26,8 @@
 					<p>{{e.description}}</p>
 					<hr class="light-hr">
 					<a href="/event_page/{{e.key.id()}}" type="button" class="btn">Event Page</a>
-					<a href="/edit_event_page" type="button" class="btn">Edit</a>
+					<a href="/edit_event" type="button" class="btn">Edit Event</a>
+					<a href="/check_requests" type="button" class="btn">Check Requests</a>
 				</div>
 			</div>
 		{% endfor %}
@@ -31,8 +35,34 @@
 	<div class="row"></div>
 	{% if not created_events %}
     	<div>You haven't created any events!</div>
-  {% endif %}
-  <hr>
+  	{% endif %}
+  	<hr>
+	<h2>Sent Requests</h2>
+    {% if requested_events %}
+		{% for e in requested_events %}
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+				<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h3>{{e.name}}</h3>
+					{% if user.key in e.volunteer_requests %}
+						<p>Requested to join as a volunteer</p>
+					{% endif %}
+					{% if user.key in e.driver_requests %}
+						<p>Requested to join as a driver</p>
+					{% endif %}
+					{% if user.key in e.translator_requests %}
+						<p>Requested to join as a translator</p>
+					{% endif %}
+					<hr class="light-hr">
+					<a href="/event_page/{{e.key.id()}}" type="button" class="btn">Event Page</a>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+	<div class="row"></div>
+	{% if not requested_events %}
+    	<div>You haven't requested to work any events!</div>
+  	{% endif %}
+  	<hr>
   <a href="/events" type="button" class="btn">Join an event</a>
   <a href="/create_event" type="button" class="btn">Create an event</a>
 {% endblock %}

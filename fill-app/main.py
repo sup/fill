@@ -112,7 +112,8 @@ def admin():
     if user:
         joined_events = Event.get_events_by_volunteer(user.key)
         created_events = Event.get_events_by_admin(user.key)
-        return render_template('admin.html', user=user, joined_events=joined_events, created_events=created_events)
+        requested_events = Event.get_events_by_request(user.key)
+        return render_template('admin.html', user=user, joined_events=joined_events, created_events=created_events, requested_events=requested_events)
     else:
         return render_template('home.html', page_title="FILL")
 
@@ -170,40 +171,46 @@ def create_event():
 
         return render_template('create_event.html', success="Event successfully created!")
 
+@app.route('/edit_event/')
+@app.route('/edit_event/<id>', methods=['GET', 'POST'])
+def edit_event(id=None):
+    """Edit Event Form"""
+    if id is None:
+        return redirect(url_for('admin'))
+    pass
+
 @app.route('/join_event/')
 @app.route('/join_event/<id>', methods=['GET', 'POST'])
 def join_event(id=None):
     if id is None:
-        return redirect(url_for('timeline'))
+        return redirect(url_for('events'))
+    # Get user
+    username = request.cookies.get('username')
+    user = User.get_user(username)
+    event = Event.get_event_by_id(id)
+    # Show form or process join as query
+    if request.method == 'GET':
+        volunteer = request.args.get("volunteer")
+        driver = request.args.get("driver")
+        translator = request.args.get("translator")
+        return render_template('join_event.html', event=event, volunteer=volunteer, driver=driver, translator=translator)
+
+    # Handle post data from form
     else:
-        # Get user
-        username = request.cookies.get('username')
-        user = User.get_user(username)
-        event = Event.get_event_by_id(id)
-        # Show form or process join as query
-        if request.method == 'GET':
-            volunteer = request.args.get("volunteer")
-            driver = request.args.get("driver")
-            translator = request.args.get("translator")
-            return render_template('join_event.html', event=event, volunteer=volunteer, driver=driver, translator=translator)
-
-        # Handle post data from form
-        else:
-            volunteer = request.form.get("volunteer")
-            driver = request.form.get("driver")
-            translator = request.form.get("translator")
-            # Check uniqueness and append to NDB model
-            if volunteer and user.key not in event.volunteer_requests:
-                event.volunteer_requests.append(user.key)
-            if driver and user.key not in event.driver_requests:
-                event.driver_requests.append(user.key)
-            if translator and user.ey not in event.translator_requests:
-                event.translator_requests.append(user.key)
-            # Make sure the event makes sense - Probably deprecated
-            event.verify()
-            event.put()
-            return render_template('join_event.html', event=event, success="Request successfully sent!")
-
+        volunteer = request.form.get("volunteer")
+        driver = request.form.get("driver")
+        translator = request.form.get("translator")
+        # Check uniqueness and append to NDB model
+        if volunteer and user.key not in event.volunteer_requests:
+            event.volunteer_requests.append(user.key)
+        if driver and user.key not in event.driver_requests:
+            event.driver_requests.append(user.key)
+        if translator and user.ey not in event.translator_requests:
+            event.translator_requests.append(user.key)
+        # Make sure the event makes sense - Probably deprecated
+        event.verify()
+        event.put()
+        return render_template('join_event.html', event=event, success="Request successfully sent!")
 
 """
 API
