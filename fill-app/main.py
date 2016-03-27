@@ -192,12 +192,14 @@ def join_event(id=None):
             volunteer = request.form.get("volunteer")
             driver = request.form.get("driver")
             translator = request.form.get("translator")
-            if volunteer:
+            # Check uniqueness and append to NDB model
+            if volunteer and user.key not in event.volunteer_requests:
                 event.volunteer_requests.append(user.key)
-            if driver:
+            if driver and user.key not in event.driver_requests:
                 event.driver_requests.append(user.key)
-            if translator:
+            if translator and user.ey not in event.translator_requests:
                 event.translator_requests.append(user.key)
+            # Make sure the event makes sense - Probably deprecated
             event.verify()
             event.put()
             return render_template('join_event.html', event=event, success="Request successfully sent!")
