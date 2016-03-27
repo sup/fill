@@ -91,10 +91,14 @@ def logout():
 
 # Profile Controller
 @app.route('/timeline')
-def timeline():
+@app.route('/timeline/<id>')
+def timeline(id=None):
     """Return Profile Page"""
-    username = request.cookies.get('username')
-    user = User.get_user(username)
+    if not id:
+        username = request.cookies.get('username')
+        user = User.get_user(username)
+    else:
+        user = User.get_user_by_id(id)
     if user:
         joined_events = Event.get_events_by_volunteer(user.key)
         created_events = Event.get_events_by_admin(user.key)

@@ -10,6 +10,11 @@ p {
     margin: 0;
 }
 
+/* Images */
+.profile-pic {
+    height:128px;
+    width: 128px;
+}
 /* Navbar */
 .nav-logo {
     margin: auto;
@@ -167,3 +172,4 @@ p {
 .light-hr {
     border-color: #fcfcfc;
 }
+

@@ -10,14 +10,9 @@
   <hr>
   <h3>Volunteers:</h3>
   <div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-      <a href="">
-        <img class="img-responsive img-thumbnail" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
-      </a>
-    </div>
     {% for v in event.volunteers %}
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-      <a href="">
+      <a href="/timeline/{{v.id()}}">
         <img class="img-responsive img-thumbnail" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
       </a>
     </div>
@@ -27,14 +22,9 @@
   <a href="/join_event/{{event.key.id()}}?volunteer=1" type="button" class="btn">Join As A Volunteer</a>
   <h3>Drivers:</h3>
   <div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-      <a href="">
-        <img class="img-responsive img-thumbnail" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
-      </a>
-    </div>
     {% for d in event.drivers %}
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-      <a href="">
+      <a href="/timeline/{{d.id()}}">
         <img class="img-responsive img-thumbnail" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
       </a>
     </div>
@@ -44,14 +34,9 @@
   <a href="/join_event/{{event.key.id()}}?driver=1" type="button" class="btn">Join As A Driver</a>
   <h3>Translators:</h3>
   <div class="row">
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-      <a href="">
-        <img class="img-responsive img-thumbnail" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
-      </a>
-    </div>
     {% for t in event.translators %}
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-      <a href="">
+      <a href="/timeline/{{t.id()}}">
         <img class="img-responsive img-thumbnail" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
       </a>
     </div>

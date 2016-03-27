@@ -6,6 +6,14 @@
     {% if success %}
     <div class="alert alert-success" role="alert">{{success}}</div>
     {% endif %}
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<h2>Edit Timeline</h2>
+	    	<a class="btn" href="/edit_timeline/{{user.key.id()}}">Update Profile Information</a>
+	    	<a class="btn btn-good" href="/create_post/{{user.key.id()}}">Create a Post</a>
+		</div>
+	</div>
+	<hr>
     <div class="row">
 		<h2 class="col-xs-12 col-sm-12 col-md-12 col-lg-12">Joined Events</h2>
 	    {% if joined_events %}
@@ -13,7 +21,15 @@
 				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 					<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<h3>{{e.name}}</h3>
-						<p>{{e.description}}</p>
+						{% if user.key in e.volunteers %}
+							<p>Joined as a volunteer</p>
+						{% endif %}
+						{% if user.key in e.drivers %}
+							<p>Joined as a driver</p>
+						{% endif %}
+						{% if user.key in e.translators %}
+							<p>Joined as a translator</p>
+						{% endif %}
 						<hr class="light-hr">
 						<a href="/event_page/{{e.key.id()}}" type="button" class="btn">Event Page</a>
 					</div>
