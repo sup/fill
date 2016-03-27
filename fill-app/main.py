@@ -19,6 +19,7 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
 """
 Main View Controllers
 """
+# Home Controller
 @app.route('/')
 def home():
     """Return landing page if not logged in, else show dashboard"""
@@ -29,9 +30,8 @@ def home():
         return redirect(url_for('timeline'))
     else:
         return render_template('home.html', page_title="FILL")
-    # else: return render_template('dashboard.html', args*, kwargs**)
 
-# TODO: Signup
+# Signup Controller
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'GET':
@@ -60,7 +60,7 @@ def signup():
             response.set_cookie("username", username)
             return response
 
-# TODO: Login Controller
+# Login Controller
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -117,13 +117,16 @@ def admin():
     else:
         return render_template('home.html', page_title="FILL")
 
-# TODO: Event Feed Controller
+"""
+Event Controllers
+"""
 @app.route('/events')
 def events():
     """Return event feed"""
     events = Event.query().fetch()
     return render_template('event_feed.html', events=events)
 
+# Event Page Controller
 @app.route('/event_page/')
 @app.route('/event_page/<id>')
 def event_page(id=None):
@@ -133,7 +136,7 @@ def event_page(id=None):
     event = Event.get_event_by_id(id)
     return render_template('event_page.html', event=event)
 
-# TODO: Create Events Controller
+# Create Events Controller
 @app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
     """Create Event Form"""
@@ -171,6 +174,7 @@ def create_event():
 
         return render_template('create_event.html', success="Event successfully created!")
 
+# Edit Event Controller
 @app.route('/edit_event/')
 @app.route('/edit_event/<id>', methods=['GET', 'POST'])
 def edit_event(id=None):
@@ -178,62 +182,81 @@ def edit_event(id=None):
     # Check ID
     if id is None:
         return redirect(url_for('admin'))
-
     # Get user
     username = request.cookies.get('username')
     user = User.get_user(username)
     if not user:
         return redirect(url_for('home'))
-
     # Get Event
     event = Event.get_event_by_id(id)
+    if event.admin.id() != user.key.id():
+        return redirect(url_for('admin'))
 
     # Handle Requests
     if request.method == 'GET':
         return render_template('edit_event.html', event=event)
     else:
-        # Parse the form if its the event admin
-        if event.admin.id() == user.key.id():
-            name = request.form["name"]
-            date = request.form["date"]
-            date = datetime.strptime(date, "%m/%d/%Y %H:%M %p")
-            hours = int(request.form["hours"])
-            description = request.form["description"]
-            language = request.form["language"]
-            physical_activity = request.form["physical_activity"]
-            volunteers_needed = int(request.form["volunteers_needed"])
-            drivers_needed = int(request.form["drivers_needed"])
-            translators_needed = int(request.form["translators_needed"])
+        # Parse the form
+        name = request.form["name"]
+        date = request.form["date"]
+        date = datetime.strptime(date, "%m/%d/%Y %H:%M %p")
+        hours = int(request.form["hours"])
+        description = request.form["description"]
+        language = request.form["language"]
+        physical_activity = request.form["physical_activity"]
+        volunteers_needed = int(request.form["volunteers_needed"])
+        drivers_needed = int(request.form["drivers_needed"])
+        translators_needed = int(request.form["translators_needed"])
 
-            # Update the event
-            event.name = name
-            event.date = date
-            event.hours = hours
-            event.description = description
-            event.language = language
-            event.physical_activity = physical_activity
-            event.volunteers_needed = int(volunteers_needed)
-            event.drivers_needed = int(drivers_needed)
-            event.translators_needed = int(translators_needed)
-            event.put()
+        # Update the event
+        event.name = name
+        event.date = date
+        event.hours = hours
+        event.description = description
+        event.language = language
+        event.physical_activity = physical_activity
+        event.volunteers_needed = int(volunteers_needed)
+        event.drivers_needed = int(drivers_needed)
+        event.translators_needed = int(translators_needed)
+        event.put()
 
-            # Return success message
-            return render_template('edit_event.html', event=event, success="Event successfully edited!")
+        # Return success message
+        return render_template('edit_event.html', event=event, success="Event successfully edited!")
 
-        # Otherwise, redirect to admin page
-        else:
-            return redirect(url_for('admin'))
+@app.route('/delete_event/')
+@app.route('/delete_event/<id>')
+def delete_event(id=None):
+    # Check id 
+    if id is None:
+        return redirect(url_for('admin'))
+    # Check user
+    username = request.cookies.get('username')
+    user = User.get_user(username)
+    if not user:
+        return redirect(url_for('home'))
+    # Check Event
+    event = Event.get_event_by_id(id)
+    if not event:
+        return redirect(url_for('admin'))
+    if event.admin.id() != user.key.id():
+        return redirect(url_for('admin'))
 
+    # Delete the event
+    event.key.delete()
+    return render_template('admin.html', success="Event successfully deleted.")
 
+# Join Event Controller
 @app.route('/join_event/')
 @app.route('/join_event/<id>', methods=['GET', 'POST'])
 def join_event(id=None):
+    # Check event id exists
     if id is None:
         return redirect(url_for('events'))
-    # Get user
+    # Get user and event
     username = request.cookies.get('username')
     user = User.get_user(username)
     event = Event.get_event_by_id(id)
+
     # Show form or process join as query
     if request.method == 'GET':
         volunteer = request.args.get("volunteer")
@@ -251,12 +274,67 @@ def join_event(id=None):
             event.volunteer_requests.append(user.key)
         if driver and user.key not in event.driver_requests:
             event.driver_requests.append(user.key)
-        if translator and user.ey not in event.translator_requests:
+        if translator and user.key not in event.translator_requests:
             event.translator_requests.append(user.key)
         # Make sure the event makes sense - Probably deprecated
         event.verify()
         event.put()
         return render_template('join_event.html', event=event, success="Request successfully sent!")
+
+# Check Request Controller
+@app.route('/check_requests/')
+@app.route('/check_requests/<id>', methods=['GET', 'POST'])
+def check_requests(id=None):
+    # Check ID
+    if id is None:
+        return redirect(url_for('admin'))
+
+    # Get user
+    username = request.cookies.get('username')
+    user = User.get_user(username)
+    if not user:
+        return redirect(url_for('home'))
+
+    # Get Event
+    event = Event.get_event_by_id(id)
+
+    # Handle Render Form Template
+    if request.method == 'GET' and event.admin.id() == user.key.id():
+        # Check for GET Parameters
+        user_id = request.args.get("user")
+        if not user_id:
+            return render_template('check_requests.html', event=event)
+        user = User.get_user_by_id(user_id)
+        volunteer = request.args.get("volunteer")
+        driver = request.args.get("driver")
+        translator = request.args.get("translator")
+        accept = int(request.args.get("accept"))
+        # Accept the User
+        if accept:
+            return str(accept)
+            if volunteer:
+                event.volunteer_requests = [x for x in event.volunteer_requests if x != user.key]
+                event.volunteers.append(user.key)
+            if driver:
+                event.driver_requests = [x for x in event.driver_requests if x != user.key]
+                event.drivers.append(user.key)
+            if translator:
+                event.translator_requests = [x for x in event.translator_requests if x != user.key]
+                event.translators.append(user.key)
+            event.put()
+            return render_template('check_requests.html', event=event, success="User successfully accepted!")
+        # Reject the User
+        else:
+            if volunteer:
+                event.volunteer_requests = [x for x in event.volunteer_requests if x != user.key]
+            if driver:
+                event.driver_requests = [x for x in event.driver_requests if x != user.key]
+            if translator:
+                event.translator_requests = [x for x in event.translator_requests if x != user.key]
+            event.put()
+            return render_template('check_requests.html', event=event, success="User successfully rejected.")
+    else:
+        return redirect(url_for('admin'))
 
 """
 API

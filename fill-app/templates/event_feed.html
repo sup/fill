@@ -108,7 +108,7 @@
               <p class="card-info">VOLUNTEERS</p>
               <div class="center-div">
                 <div class="progress progress-bar-vertical">
-                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="height: 60%;">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{e.volunteer_fill_percentage()}}" aria-valuemin="0" aria-valuemax="100" style="height: {{e.volunteer_fill_percentage()}}%;">
                   </div>
                 </div>
               </div>
@@ -117,7 +117,7 @@
               <p class="card-info">DRIVERS</p>
               <div class="center-div">
                 <div class="progress progress-bar-vertical">
-                  <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="height: 60%;">
+                  <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="{{e.driver_fill_percentage()}}" aria-valuemin="0" aria-valuemax="100" style="height: {{e.driver_fill_percentage()}}%;">
                   </div>
                 </div>
               </div>
@@ -126,7 +126,7 @@
               <p class="card-info">TRANSLATORS</p>
               <div class="center-div">
                 <div class="progress progress-bar-vertical">
-                  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="height: 60%;">
+                  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{e.translator_fill_percentage()}}" aria-valuemin="0" aria-valuemax="100" style="height: {{e.translator_fill_percentage()}}%;">
                   </div>
                 </div>
               </div>
@@ -136,7 +136,7 @@
         <div class="card-footer col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <br>
           <a href="/event_page/{{e.key.id()}}" type="button" class="btn">Event Page</a>
-          <a href="/join_event/{{e.key.id()}}" type="button" class="btn">Join Event</a>
+          <a href="/join_event/{{e.key.id()}}" type="button" class="btn btn-good">Join Event</a>
         </div>
     </div>
   {% endfor %}

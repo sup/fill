@@ -11,7 +11,10 @@ class User(ndb.Model):
     email = ndb.StringProperty(required = True)
     password_hash = ndb.StringProperty(required = True)
     bio = ndb.TextProperty()
+    education = ndb.TextProperty()
     skills = ndb.StringProperty(repeated = True)
+    interests = ndb.StringProperty(repeated = True)
+
 
     @classmethod
     def is_username_available(self, username):
@@ -74,6 +77,17 @@ class Event(ndb.Model):
     drivers = ndb.KeyProperty(repeated=True)
     translators = ndb.KeyProperty(repeated=True)
 
+    # Instance methods for getting progress bar ratios
+    def volunteer_fill_percentage(self):
+        return int(float(len(self.volunteers))/self.volunteers_needed*100)
+
+    def driver_fill_percentage(self):
+        return int(float(len(self.drivers))/self.drivers_needed*100)
+
+    def translator_fill_percentage(self):
+        return int(float(len(self.translators))/self.translators_needed*100)
+
+
     def verify(self):
         # Fix some event values that are broken ... deprecated
         if self.volunteers_needed == [None]:
@@ -95,6 +109,8 @@ class Event(ndb.Model):
         if self.translators == [None]:
             self.translators = []
 
+
+    # Public API
     @classmethod
     def get_events_by_name(self, name):
         """Get a list of events matching name"""

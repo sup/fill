@@ -93,11 +93,10 @@ p {
 .btn:hover {
     color: #fff;
     border-color: #565a5c;
-    background-color: #F4A4B0;
+    background-color: #565a5c;
 }
 
 .btn:visited {
-    color: #565a5c;
     border-color: #565a5c;
     border-width: 2px;
     background-color: transparent;
@@ -108,6 +107,14 @@ p {
     border-color: #565a5c;
     border-width: 2px;
     background-color: transparent;
+}
+
+.btn-good:hover {
+    background-color: #43D594;
+}
+
+.btn-bad:hover {
+    background-color: #F4A4B0;
 }
 
 /* Progress Bars */

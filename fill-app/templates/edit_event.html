@@ -56,6 +56,27 @@
         <label for="">Translators Needed</label>
         <input type="number" name="translators_needed" class="form-control" value="{{event.translators_needed}}" min="{0"} max="" step="" required="required">
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-good btn-primary">Update Event</button>
+      <a class="btn btn-bad" data-toggle="modal" href='#modal-id'>Delete Event</a>
+      <div class="modal fade" id="modal-id">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+              Clicking the delete button below will delete the event "{{event.name}}" permanently and all volunteers, drivers, and translators for this event will be removed from the system.
+              <br>
+              <div class="text-center">
+                <a href="/delete_event/{{event.key.id()}}" class="btn btn-bad">Delete Event</a>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
 {% endblock %}

@@ -1,0 +1,53 @@
+{% extends "dashboard.html" %}
+{% block content %}
+  <h1>Volunteer Requests ({{event.name}})</h1>
+  <hr>
+  {% if error %}
+  <div class="alert alert-danger" role="alert">{{error}}</div>
+  {% endif %}
+  {% if success %}
+  <div class="alert alert-success" role="alert">{{success}}</div>
+  {% endif %}
+  <div class="row">
+    <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12">Volunteers:</h3>
+    {% if not event.volunteer_requests %}
+      <p class="col-xs-6 col-sm-4 col-md-3 col-lg-3">No pending requests!</p>
+    {% endif %}
+    {% for v in event.volunteer_requests %}
+    <div class="text-center col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <img class="img-responsive img-thumbnail" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="">
+        <div class="caption">{{v.get().name}}</div>
+        <a href="/check_requests/{{event.key.id()}}?user={{v.id()}}&volunteer=1&accept=1" type="button" class="btn-good btn btn-sm">Accept</a>
+        <a href="/check_requests/{{event.key.id()}}?user={{v.id()}}&volunteer=1&accept=0" type="button" class="btn-bad btn btn-sm">Reject</a>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="row">
+    <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12">Drivers:</h3>
+    {% if not event.driver_requests %}
+      <p class="col-xs-6 col-sm-4 col-md-3 col-lg-3">No pending requests!</p>
+    {% endif %}
+    {% for v in event.driver_requests %}
+    <div class="text-center col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <img class="img-responsive img-thumbnail" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="">
+        <div class="caption">{{v.get().name}}</div>
+        <a href="/check_requests/{{event.key.id()}}?user={{v.id()}}&driver=1&accept=1" type="button" class="btn-good btn btn-sm">Accept</a>
+        <a href="/check_requests/{{event.key.id()}}?user={{v.id()}}&driver=1&accept=0" type="button" class="btn-bad btn btn-sm">Reject</a>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="row">
+    <h3 class="col-xs-12 col-sm-12 col-md-12 col-lg-12">Translators:</h3>
+    {% if not event.translator_requests %}
+      <p class="col-xs-6 col-sm-4 col-md-3 col-lg-3">No pending requests!</p>
+    {% endif %}
+    {% for v in event.translator_requests %}
+    <div class="text-center col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <img class="img-responsive img-thumbnail" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="">
+        <div class="caption">{{v.get().name}}</div>
+        <a href="/check_requests/{{event.key.id()}}?user={{v.id()}}&translator=1&accept=1" type="button" class="btn-good btn btn-sm">Accept</a>
+        <a href="/check_requests/{{event.key.id()}}?user={{v.id()}}&translator=1&accept=0" type="button" class="btn-bad btn btn-sm">Reject</a>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
