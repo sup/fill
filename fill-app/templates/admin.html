@@ -19,7 +19,7 @@
 		{% for e in created_events %}
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 				<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<h3>Event Name</h3>
+					<h3>{{e.name}}</h3>
 					<p>{{e.description}}</p>
 					<hr class="light-hr">
 					<a href="/event_page/{{e.key.id()}}" type="button" class="btn">See Event Page</a>
@@ -31,8 +31,8 @@
 	<div class="row"></div>
 	{% if not created_events %}
     	<div>You haven't created any events!</div>
-    {% endif %}
-    <hr>
-    <a href="/events" type="button" class="btn">Join an event</a>
-    <a href="/create_event" type="button" class="btn">Create an event</a>
+  {% endif %}
+  <hr>
+  <a href="/events" type="button" class="btn">Join an event</a>
+  <a href="/create_event" type="button" class="btn">Create an event</a>
 {% endblock %}

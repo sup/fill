@@ -43,18 +43,29 @@ class Event(ndb.Model):
     """
     Event model for the FILL app.
     """
-    # Properties
+    # Basic Info
     name = ndb.StringProperty(required=True)
     date = ndb.DateTimeProperty(required=True)
     admin = ndb.KeyProperty(required=True)
-    volunteers = ndb.KeyProperty(repeated=True)
     description = ndb.TextProperty(required=True)
     language = ndb.StringProperty(required=True)
     hours = ndb.IntegerProperty(required=True)
     physical_activity = ndb.StringProperty(required=True)
+
+    # Needed Personnel
     volunteers_needed = ndb.IntegerProperty(required=True)
     drivers_needed = ndb.IntegerProperty(required=True)
     translators_needed = ndb.IntegerProperty(required=True)
+
+    # Requests
+    volunteer_requests = ndb.IntegerProperty(required=True)
+    driver_requests = ndb.IntegerProperty(required=True)
+    translator_requests = ndb.IntegerProperty(required=True)
+
+    # Accepted Personnel
+    volunteers = ndb.KeyProperty(repeated=True)
+    drivers = ndb.KeyProperty(repeated=True)
+    translators = ndb.KeyProperty(repeated=True)
 
     @classmethod
     def get_events_by_name(self, name):

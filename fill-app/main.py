@@ -5,7 +5,7 @@
 import jinja2
 import os
 from flask import Flask, render_template, request, make_response, redirect, url_for
-import datetime
+from datetime import datetime, timedelta
 app = Flask(__name__)
 # Import custom libraries
 from util.security import *
@@ -142,7 +142,7 @@ def create_event():
         # Parse the form
         name = request.form["name"]
         date = request.form["date"]
-        date = datetime.datetime.strptime(date, "%m/%d/%Y %H:%M %p")
+        date = datetime.strptime(date, "%m/%d/%Y %H:%M %p")
         hours = int(request.form["hours"])
         description = request.form["description"]
         language = request.form["language"]
@@ -169,6 +169,27 @@ def create_event():
         event.put()
 
         return render_template('create_event.html', success="Event successfully created!")
+
+@app.route('/join_event/')
+@app.route('/join_event/<id>', methods=['GET', 'POST'])
+def join_event(id=None):
+    if id is None:
+        return redirect(url_for('timeline'))
+    else:
+        event = Event.get_event_by_id(id)
+        # Show form or process join as query
+        if request.method == 'GET':
+            volunteer = request.args.get("volunteer")
+            driver = request.args.get("driver")
+            translator = request.args.get("translator")
+            return render_template('join_event.html', event=event, volunteer=volunteer, driver=driver, translator=translator)
+        # Handle post data from form
+        else:
+            volunteer = request.form["volunteer"]
+            driver = request.form["driver"]
+            translator = request.form["translator"]
+            return render_template('join_event.html', event=event)
+
 
 """
 API

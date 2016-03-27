@@ -1,0 +1,53 @@
+{% extends "dashboard.html" %}
+{% block content %}
+    <h1>Join Event</h1>
+    <hr>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success" role="alert">{{success}}</div>
+    {% endif %}
+    <div class="row text-center"><h1>I want to help out as a...</h1></div>
+    <form action="/join_event" method="POST" role="form">    
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+          <div class="text-center">
+            <h4>Volunteer</h4>
+            <img src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
+            <br>
+            {% if volunteer %}
+              <input type="checkbox" name="volunteer" id="Volunteer" value="1" checked="checked">
+            {% else %}
+              <input type="checkbox" name="volunteer" id="Volunteer" value="1">
+            {% endif %}
+          </div>
+        </div>  
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+          <div class="text-center">
+            <h4>Driver</h4>
+            <img src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
+            <br>
+            {% if driver %}
+              <input type="checkbox" name="driver" id="driver" value="1" checked="checked">
+            {% else %}
+              <input type="checkbox" name="driver" id="driver" value="1">
+            {% endif %}
+          </div>
+        </div>  
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+          <div class="text-center">
+            <h4>Translator</h4>
+            <img src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
+            <br>
+            {% if translator %}
+              <input type="checkbox" name="translator" id="translator" value="1" checked="checked">
+            {% else %}
+              <input type="checkbox" name="translator" id="translator" value="1">
+            {% endif %}
+          </div>
+        </div>  
+      </div>
+    <div class="row text-center"><button type="submit" class="btn btn-lg btn-primary">Send Request!</button></div>
+    </form>
+{% endblock %}
