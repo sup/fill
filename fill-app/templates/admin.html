@@ -6,14 +6,6 @@
     {% if success %}
     <div class="alert alert-success" role="alert">{{success}}</div>
     {% endif %}
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<h2>Edit Timeline</h2>
-	    	<a class="btn" href="/edit_timeline/{{user.key.id()}}">Update Profile Information</a>
-	    	<a class="btn btn-good" href="/create_post/{{user.key.id()}}">Create a Post</a>
-		</div>
-	</div>
-	<hr>
     <div class="row">
 		<h2 class="col-xs-12 col-sm-12 col-md-12 col-lg-12">Joined Events</h2>
 	    {% if joined_events %}
@@ -22,13 +14,13 @@
 					<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<h3>{{e.name}}</h3>
 						{% if user.key in e.volunteers %}
-							<p>Joined as a volunteer</p>
+							<p><span class="glyphicon glyphicon-ok"></span>Joined as a volunteer</p>
 						{% endif %}
 						{% if user.key in e.drivers %}
-							<p>Joined as a driver</p>
+							<p><span class="glyphicon glyphicon-ok"></span>Joined as a driver</p>
 						{% endif %}
 						{% if user.key in e.translators %}
-							<p>Joined as a translator</p>
+							<p><span class="glyphicon glyphicon-ok"></span>Joined as a translator</p>
 						{% endif %}
 						<hr class="light-hr">
 						<a href="/event_page/{{e.key.id()}}" type="button" class="btn">Event Page</a>
@@ -51,8 +43,8 @@
 						<p>{{e.description}}</p>
 						<hr class="light-hr">
 						<a href="/event_page/{{e.key.id()}}" type="button" class="btn">Event Page</a>
-						<a href="/edit_event/{{e.key.id()}}" type="button" class="btn">Edit Event</a>
-						<a href="/check_requests/{{e.key.id()}}" type="button" class="btn">Check Requests</a>
+						<a href="/edit_event/{{e.key.id()}}" type="button" class="btn btn-good">Edit</a>
+						<a href="/check_requests/{{e.key.id()}}" type="button" class="btn btn-bad">Requests</a>
 					</div>
 				</div>
 			{% endfor %}
@@ -71,13 +63,13 @@
 					<div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<h3>{{e.name}}</h3>
 						{% if user.key in e.volunteer_requests %}
-							<p>Requested to join as a volunteer</p>
+							<p><span class="glyphicon glyphicon-send"></span> Requested to join as a volunteer</p>
 						{% endif %}
 						{% if user.key in e.driver_requests %}
-							<p>Requested to join as a driver</p>
+							<p><span class="glyphicon glyphicon-send"></span> Requested to join as a driver</p>
 						{% endif %}
 						{% if user.key in e.translator_requests %}
-							<p>Requested to join as a translator</p>
+							<p><span class="glyphicon glyphicon-send"></span> Requested to join as a translator</p>
 						{% endif %}
 						<hr class="light-hr">
 						<a href="/event_page/{{e.key.id()}}" type="button" class="btn">Event Page</a>

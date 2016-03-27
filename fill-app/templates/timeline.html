@@ -1,16 +1,186 @@
 {% extends "dashboard.html" %}
 {% block content %}
-	<br>
-	<br>
-	<div class="row">
-		<div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<img class="img-circle profile-pic" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg">
-	    	<h1 class="green-font">{{user.name}}</h1>
-	    	<p>Joined Events: {{joined_events|length}}  •  Created Events: {{created_events|length}}  •  Followers: 0</p>
-	    	<br>
-	    	<hr>
-	    </div>
-	</div>
-	<div class="row">
+  {% if error %}
+  <div class="alert alert-danger" role="alert">{{error}}</div>
+  {% endif %}
+  {% if success %}
+  <div class="alert alert-success" role="alert">{{success}}</div>
+  {% endif %}
+  <br>
+  <br>
+  <div class="row">
+    <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <img class="img-circle profile-pic" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg">
+        <h1 class="green-font">{{user.name}}</h1>
+        <p>Joined Events: {{joined_events|length}}  •  Created Events: {{created_events|length}}  •  Followers: 0</p>
+        <br>
+        <hr>
+      </div>
+  </div>
+  <div class="row">
+    <div class="text-center col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <h3>Bio</h3>
+      {% if not user.bio %}
+        <p>I haven't posted a bio yet, but I'm {{user.name}}!</p>
+      {% else %}
+        <p>{{user.bio}}</p>
+      {% endif %}
+    </div>
+    <div class="text-center col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <h3>Skills</h3>
+      <p>
+        {% if not user.skills %}
+          I haven't told anyone my skills yet!
+        {% else %}
+          {{user.skills}}
+        {% endif %}
+      <p>
+    </div>
+    <div class="text-center col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <h3>Interests</h3>
+      <p>
+        {% if not user.interests %}
+          I haven't told anyone my interests yet!
+        {% else %}
+          {{user.interests}}
+        {% endif %}
+      <p>
+    </div>
+    {% if is_owner %}
+      <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <br>
+        <!-- Edit Timeline Modal -->
+        <a class="btn btn-good" data-toggle="modal" href='#modal-edit-timeline'>Edit Timeline</a>
+        <div class="modal fade" id="modal-edit-timeline">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit Timeline</h4>
+              </div>
+              <!-- form -->
+              <form action="/edit_timeline/{{user.key.id()}}" method="POST" role="form">
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="">Bio</label>
+                    <textarea name="bio" class="form-control" rows="3" placeholder="Something about yourself..."></textarea>
+                    <label for="">Skills</label>
+                    <textarea name="skills" class="form-control" rows="3" placeholder="Technical, physical, knowledge..."></textarea>
+                    <label for="">Interests</label>
+                    <textarea name="interests" class="form-control" rows="3" placeholder="Clubs, activities, hobbies..."></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-good">Save changes</button>
+                  <button type="button" class="btn btn-bad" data-dismiss="modal">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- End Edit Timeline Modal -->
+      </div>
+    {% endif %}
+  </div>
+  <hr>
+  <div class="row">
+    <h2 class="text-center">Timeline</h2>
+    {% if posts %}
+      {% for p in posts %}
+        <div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+          <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h3>{{p.title}}</h3>
+            <p>{{p.body}}
+            <hr class="light-hr">
+            <!-- Edit Post Modal -->
+            <a class="btn btn-good" data-toggle="modal" href='#modal-edit-post-{{p.key.id()}}'>Edit post</a>
+            <div class="modal fade" id="modal-edit-post-{{p.key.id()}}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Edit Post</h4>
+                  </div>
+                  <!-- form -->
+                  <form action="/edit_post/{{user.key.id()}}/{{p.key.id()}}" method="POST" role="form">
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label for="">Title</label>
+                        <input type="text" name="title" class="form-control" placeholder="Title" value="{{p.title}}">
+                        <label for="">Body</label>
+                        <textarea name="body" class="form-control" rows="6" placeholder="Tell a great story!" required="required">{{p.body}}</textarea>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-good">Update Post</button>
+                      <button type="button" class="btn btn-bad" data-dismiss="modal">Cancel</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- End Edit Post Modal -->
 
+            <!-- Delete Post Modal -->
+            <a class="btn btn-bad" data-toggle="modal" href='#modal-delete-post-{{p.key.id()}}'>Delete Post</a>
+            <div class="modal fade" id="modal-delete-post-{{p.key.id()}}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Are you sure?</h4>
+                  </div>
+                  <div class="modal-body">
+                    Clicking the delete button below will delete the post "{{p.title}}" permanently and records for this post will be removed from the system.
+                    <br>
+                    <div class="text-center">
+                      <a href="/delete_post/{{p.key.id()}}" class="btn btn-bad">Delete Post</a>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Delete Post Modal -->
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% if is_owner %}
+      <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <br>
+        <!-- Add Post Modal -->
+        <a class="btn btn-good" data-toggle="modal" href='#modal-add-post'>Add post</a>
+        <div class="modal fade" id="modal-add-post">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add Post</h4>
+              </div>
+              <!-- form -->
+              <form action="/create_post/{{user.key.id()}}" method="POST" role="form">
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="">Title</label>
+                    <input type="text" name="title" class="form-control" placeholder="Title" value="">
+                    <label for="">Body</label>
+                    <textarea name="body" class="form-control" rows="6" placeholder="Tell a great story!" required="required"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-good">Upload Post</button>
+                  <button type="button" class="btn btn-bad" data-dismiss="modal">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- End Add Post Modal -->
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}
+

@@ -12,8 +12,8 @@ class User(ndb.Model):
     password_hash = ndb.StringProperty(required = True)
     bio = ndb.TextProperty()
     education = ndb.TextProperty()
-    skills = ndb.StringProperty(repeated = True)
-    interests = ndb.StringProperty(repeated = True)
+    skills = ndb.TextProperty()
+    interests = ndb.TextProperty()
 
 
     @classmethod
@@ -134,6 +134,26 @@ class Event(ndb.Model):
     @classmethod
     def get_event_by_id(self, id):
         """Get an event by its key id"""
+        return self.get_by_id(int(id))
+
+class Post(ndb.Model):
+    """
+    Post model for the FILL app.
+    """
+    # Basic Info
+    title = ndb.StringProperty(required=True)
+    body = ndb.TextProperty(required=True)
+    writer = ndb.KeyProperty(required=True)
+
+    # Public API
+    @classmethod
+    def get_posts_by_writer(self, user):
+        """Get a list of posts by a user"""
+        return self.query(self.writer == user).fetch()
+
+    @classmethod
+    def get_post_by_id(self, id):
+        """Get a post by its key id"""
         return self.get_by_id(int(id))
 
 

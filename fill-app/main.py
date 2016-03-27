@@ -9,12 +9,28 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 # Import custom libraries
 from util.security import *
-from models.models import User, Event
+from models.models import User, Event, Post
 
 # Template Directories
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
                                autoescape = True)
+
+"""
+No Cache Decorator
+"""
+from functools import wraps, update_wrapper
+def nocache(view):
+    @wraps(view)
+    def no_cache(*args, **kwargs):
+        response = make_response(view(*args, **kwargs))
+        response.headers['Last-Modified'] = datetime.now()
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '-1'
+        return response
+        
+    return update_wrapper(no_cache, view)
 
 """
 Main View Controllers
@@ -89,23 +105,125 @@ def logout():
     response.set_cookie('username', '')
     return response
 
+"""
+Timeline and Admin
+"""
 # Profile Controller
 @app.route('/timeline')
 @app.route('/timeline/<id>')
 def timeline(id=None):
     """Return Profile Page"""
+    # Hacky redirect - refactor in the future
+    username = request.cookies.get('username')
+    cookie_user = User.get_user(username)
     if not id:
-        username = request.cookies.get('username')
-        user = User.get_user(username)
+        return redirect('timeline/' + str(cookie_user.key.id()))
     else:
         user = User.get_user_by_id(id)
     if user:
+        is_owner = cookie_user == user
         joined_events = Event.get_events_by_volunteer(user.key)
         created_events = Event.get_events_by_admin(user.key)
+        posts = Post.get_posts_by_writer(user.key)
         first_name = user.name.split(" ")[0]
-        return render_template('timeline.html', user=user, first_name=first_name, joined_events=joined_events, created_events=created_events)
+        return render_template('timeline.html', is_owner=is_owner, user=user, first_name=first_name, joined_events=joined_events, created_events=created_events, posts=posts)
     else:
         return render_template('home.html', page_title="FILL")
+
+# Edit Timeline Controller
+@app.route('/edit_timeline')
+@app.route('/edit_timeline/<id>', methods=['GET', 'POST'])
+def edit_timeline(id=None):
+    """Edit Timeline Info"""
+    # Hacky redirect - refactor in the future
+    username = request.cookies.get('username')
+    cookie_user = User.get_user(username)
+    if request.method == "GET":
+        return redirect('timeline/' + str(cookie_user.key.id()))
+    if not id:
+        return redirect('timeline/' + str(cookie_user.key.id()))
+    else:
+        user = User.get_user_by_id(id)
+    if user == cookie_user and request.method == "POST":
+        user.bio = request.form.get("bio")
+        user.skills = request.form.get("skills")
+        user.nterests = request.form.get("interests")
+        user.put()
+        return redirect('timeline/' + str(cookie_user.key.id()))
+    else:
+        return redirect('timeline/' + str(cookie_user.key.id()))
+
+# Create Post Controller
+@app.route('/create_post')
+@app.route('/create_post/<id>', methods=['GET', 'POST'])
+def create_post(id=None):
+    """Create a Post"""
+    # Hacky redirect - refactor in the future
+    username = request.cookies.get('username')
+    cookie_user = User.get_user(username)
+    if request.method == "GET":
+        return redirect('timeline/' + str(cookie_user.key.id()))
+    if not id:
+        return redirect('timeline/' + str(cookie_user.key.id()))
+    else:
+        user = User.get_user_by_id(id)
+    if user == cookie_user and request.method == "POST":
+        title = request.form.get("title")
+        body = request.form.get("body")
+        # Create a Post
+        post = Post(title=title, body=body, writer=user.key)
+        post.put()
+        return redirect('timeline/' + str(cookie_user.key.id()))
+    else:
+        return redirect('timeline/' + str(cookie_user.key.id()))
+
+# Edit Post Controller
+@app.route('/edit_post')
+@app.route('/edit_post/<id>/<post_id>', methods=['GET', 'POST'])
+def edit_post(id=None, post_id=None):
+    """Edit a Post"""
+    # Hacky redirect - refactor in the future
+    username = request.cookies.get('username')
+    cookie_user = User.get_user(username)
+    if request.method == "GET":
+        return redirect('timeline/' + str(cookie_user.key.id()))
+    if not id or not post_id:
+        return redirect('timeline/' + str(cookie_user.key.id()))
+    else:
+        user = User.get_user_by_id(id)
+    if user == cookie_user and request.method == "POST":
+        title = request.form.get("title")
+        body = request.form.get("body")
+        post = Post.get_post_by_id(post_id)
+        post.title = title
+        post.body = body
+        # Create a Post
+        post.put()
+        return redirect('timeline/' + str(cookie_user.key.id()))
+    else:
+        return redirect('timeline/' + str(cookie_user.key.id()))
+
+@app.route('/delete_post/')
+@app.route('/delete_post/<id>')
+def delete_post(id=None):
+    # Check user
+    username = request.cookies.get('username')
+    user = User.get_user(username)
+    if not user:
+        return redirect(url_for('home'))
+    # Check id 
+    if id is None:
+        return redirect('timeline/' + str(user.key.id()))
+    # Check Post
+    post = Post.get_post_by_id(id)
+    if not post:
+        return redirect('timeline/' + str(user.key.id()))
+    if post.writer.id() != user.key.id():
+        return redirect('timeline/' + str(user.key.id()))
+
+    # Delete the event
+    post.key.delete()
+    return redirect('timeline/' + str(user.key.id()))
 
 # Admin Controller
 @app.route('/admin')
@@ -274,12 +392,24 @@ def join_event(id=None):
         driver = request.form.get("driver")
         translator = request.form.get("translator")
         # Check uniqueness and append to NDB model
-        if volunteer and user.key not in event.volunteer_requests:
-            event.volunteer_requests.append(user.key)
-        if driver and user.key not in event.driver_requests:
-            event.driver_requests.append(user.key)
-        if translator and user.key not in event.translator_requests:
-            event.translator_requests.append(user.key)
+        error = None
+        if volunteer:
+            if user.key not in event.volunteer_requests and user.key not in event.volunteers:
+                event.volunteer_requests.append(user.key)
+            else:
+                error = "You have already sent a request or are already a volunteer!"
+        if driver:
+            if user.key not in event.driver_requests and user.key not in event.drivers:
+                event.driver_requests.append(user.key)
+            else:
+                error = "You have already sent a request or are already a driver!"
+        if translator:
+            if user.key not in event.translator_requests and user.key not in event.translators:
+                event.translator_requests.append(user.key)
+            else: 
+                error = "You have already sent a request or are already a translator!"
+        if error:
+            return render_template('join_event.html', event=event, error=error)
         # Make sure the event makes sense - Probably deprecated
         event.verify()
         event.put()
