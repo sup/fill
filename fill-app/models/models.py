@@ -14,7 +14,7 @@ class User(ndb.Model):
     education = ndb.TextProperty()
     skills = ndb.TextProperty()
     interests = ndb.TextProperty()
-
+    profile_pic = ndb.StringProperty()
 
     @classmethod
     def is_username_available(self, username):

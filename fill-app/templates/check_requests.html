@@ -16,7 +16,11 @@
     {% for v in event.volunteer_requests %}
     <div class="text-center col-xs-6 col-sm-4 col-md-3 col-lg-3">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <img class="center-block img-responsive profile-pic img-circle" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="">
+          {% if not v.get().profile_pic %}
+            <img class="img-circle profile-pic" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg">
+          {% else %}
+            <img class="img-circle profile-pic" src="{{v.get().profile_pic}}">
+          {% endif %}
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="caption">{{v.get().name}}</div>
@@ -34,7 +38,11 @@
     {% for v in event.driver_requests %}
     <div class="text-center col-xs-6 col-sm-4 col-md-3 col-lg-3">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <img class="center-block img-responsive profile-pic img-circle" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="">
+          {% if not v.get().profile_pic %}
+            <img class="img-circle profile-pic" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg">
+          {% else %}
+            <img class="img-circle profile-pic" src="{{v.get().profile_pic}}">
+          {% endif %}
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="caption">{{v.get().name}}</div>
@@ -52,7 +60,11 @@
     {% for v in event.translator_requests %}
     <div class="text-center col-xs-6 col-sm-4 col-md-3 col-lg-3">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <img class="center-block img-responsive profile-pic img-circle" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="">
+          {% if not v.get().profile_pic %}
+            <img class="img-circle profile-pic" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg">
+          {% else %}
+            <img class="img-circle profile-pic" src="{{v.get().profile_pic}}">
+          {% endif %}
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="caption">{{v.get().name}}</div>

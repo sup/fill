@@ -10,7 +10,11 @@
   <br>
   <div class="row">
     <div class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <img class="img-circle profile-pic" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg">
+      {% if not user.profile_pic %}
+        <img class="img-circle profile-pic" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg">
+      {% else %}
+        <img class="img-circle profile-pic" src="{{user.profile_pic}}">
+      {% endif %}
         <h1 class="green-font">{{user.name}}</h1>
         <p>Joined Events: {{joined_events|length}}  •  Created Events: {{created_events|length}}  •  Followers: 0</p>
         <br>
@@ -62,6 +66,8 @@
               <form action="/edit_timeline/{{user.key.id()}}" method="POST" role="form">
                 <div class="modal-body">
                   <div class="form-group">
+                    <label for="">Profile Pic URL</label>
+                    <input type="text" name="profile_pic" class="form-control" placeholder="Image URL" value="{{user.profile_pic}}">
                     <label for="">Bio</label>
                     <textarea name="bio" class="form-control" rows="3" placeholder="Something about yourself...">{{user.bio}}</textarea>
                     <label for="">Skills</label>

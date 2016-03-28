@@ -13,7 +13,11 @@
     {% for v in event.volunteers %}
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
       <a href="/timeline/{{v.id()}}">
-        <img class="img-responsive profile-pic img-circle" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
+        {% if not v.get().profile_pic %}
+          <img class="img-circle profile-pic" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg">
+        {% else %}
+          <img class="img-circle profile-pic" src="{{v.get().profile_pic}}">
+        {% endif %}
       </a>
     </div>
     {% endfor %}
@@ -25,7 +29,11 @@
     {% for d in event.drivers %}
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
       <a href="/timeline/{{d.id()}}">
-        <img class="img-responsive profile-pic img-circle" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
+        {% if not d.get().profile_pic %}
+          <img class="img-circle profile-pic" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg">
+        {% else %}
+          <img class="img-circle profile-pic" src="{{d.get().profile_pic}}">
+        {% endif %}
       </a>
     </div>
     {% endfor %}
@@ -37,7 +45,11 @@
     {% for t in event.translators %}
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
       <a href="/timeline/{{t.id()}}">
-        <img class="img-responsive profile-pic img-circle" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg" alt="...">
+        {% if not t.get().profile_pic %}
+          <img class="img-circle profile-pic" src="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg">
+        {% else %}
+          <img class="img-circle profile-pic" src="{{t.get().profile_pic}}">
+        {% endif %}
       </a>
     </div>
     {% endfor %}
