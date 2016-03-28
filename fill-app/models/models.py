@@ -57,8 +57,10 @@ class Event(ndb.Model):
     name = ndb.StringProperty(required=True)
     date = ndb.DateTimeProperty(required=True)
     admin = ndb.KeyProperty(required=True)
+    location = ndb.StringProperty(required=True)
     description = ndb.TextProperty(required=True)
     language = ndb.StringProperty(required=True)
+    accessibility = ndb.StringProperty(required=True)
     hours = ndb.IntegerProperty(required=True)
     physical_activity = ndb.StringProperty(required=True)
 

@@ -272,6 +272,8 @@ def create_event():
         date = request.form["date"]
         date = datetime.strptime(date, "%m/%d/%Y %H:%M %p")
         hours = int(request.form["hours"])
+        location = request.form["location"]
+        accessibility = request.form["accessibility"]
         description = request.form["description"]
         language = request.form["language"]
         physical_activity = request.form["physical_activity"]
@@ -286,7 +288,9 @@ def create_event():
         # Create and event
         event = Event(name=name, 
                       date=date, 
-                      hours=hours, 
+                      hours=hours,
+                      location=location,
+                      accessibility=accessibility,
                       description=description,
                       language=language,
                       physical_activity=physical_activity,
@@ -324,6 +328,8 @@ def edit_event(id=None):
         name = request.form["name"]
         date = request.form["date"]
         date = datetime.strptime(date, "%m/%d/%Y %H:%M %p")
+        location = request.form["location"]
+        accessibility = request.form["accessibility"]
         hours = int(request.form["hours"])
         description = request.form["description"]
         language = request.form["language"]
@@ -336,6 +342,8 @@ def edit_event(id=None):
         event.name = name
         event.date = date
         event.hours = hours
+        event.location = location
+        event.accessibility = accessibility
         event.description = description
         event.language = language
         event.physical_activity = physical_activity

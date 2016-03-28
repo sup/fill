@@ -136,11 +136,11 @@ p {
 /* Progress Bars */
 .progress-bar-vertical {
   width: 20px;
-  min-height: 100px;
+  min-height: 200px;
   display: flex;
   align-items: flex-end;
   float: left;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 .progress-bar-vertical .progress-bar {
