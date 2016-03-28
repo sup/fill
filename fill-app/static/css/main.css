@@ -184,3 +184,8 @@ p {
     border-color: #fcfcfc;
 }
 
+/* Tryna force a CSS update! */
+.dark-hr {
+    border-color: black;
+}
+
