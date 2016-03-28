@@ -147,7 +147,7 @@ def edit_timeline(id=None):
     if user == cookie_user and request.method == "POST":
         user.bio = request.form.get("bio")
         user.skills = request.form.get("skills")
-        user.nterests = request.form.get("interests")
+        user.interests = request.form.get("interests")
         user.put()
         return redirect('timeline/' + str(cookie_user.key.id()))
     else:
