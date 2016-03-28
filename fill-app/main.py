@@ -145,6 +145,7 @@ def edit_timeline(id=None):
     else:
         user = User.get_user_by_id(id)
     if user == cookie_user and request.method == "POST":
+        user.name = request.form.get("name")
         user.bio = request.form.get("bio")
         user.skills = request.form.get("skills")
         user.interests = request.form.get("interests")
