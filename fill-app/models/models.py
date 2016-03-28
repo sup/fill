@@ -14,7 +14,7 @@ class User(ndb.Model):
     education = ndb.TextProperty()
     skills = ndb.TextProperty()
     interests = ndb.TextProperty()
-    profile_pic = ndb.StringProperty()
+    profile_pic = ndb.StringProperty(default="http://www.homepcpatrol.com/sites/default/files/imagecache/Profile_Full/alice-stilwell.jpg")
 
     @classmethod
     def is_username_available(self, username):
