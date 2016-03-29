@@ -7,6 +7,29 @@
     {% endif %}
     {% if success %}
     <div class="alert alert-success" role="alert">{{success}}</div>
+    <script type="text/javascript">
+      $(document).ready(function () {
+          $('#share-modal').modal('show');
+      });
+    </script>
+    <div class="modal fade in" id="share-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Share this with friends!</h4>
+          </div>
+          <div class="modal-body">
+            <label>Message</label>
+            <textarea name="" id="input" class="form-control" rows="4" required="required">Hey everyone! I just sent a request to join {{event.name}} as a volunteer! It's a great cause, and it starts on {{event.date.strftime('%A')}}, {{event.date.strftime('%B %d, %Y')}} at {{event.date.strftime('%-I%p')}}! If you can make it, come out and help support us!</textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal">Share</button>
+            <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
     {% endif %}
     <div class="row text-center"><h1>I want to help out as a...</h1></div>
     <form action="/join_event/{{event.key.id()}}" method="POST" role="form">    
